@@ -21,11 +21,11 @@ warmup_steps = 20000
 
 batch_size = 256
 gamma = 0.99
-memory_size = 2000000
+memory_size = 3000000
 lr  = 0.0025
 seq_len = 580
 
-soft_reward_inc = 1.2
+soft_reward_inc = 1.1
 comission = 20/100000
 
 resume = True
