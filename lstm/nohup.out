@@ -1,0 +1,35 @@
+2022-05-29 11:40:31.317311: I tensorflow/core/tpu/tpu_initializer_helper.cc:100] libtpu.so is already in use by process with pid 6639. Not attempting to load libtpu.so in this process.
+2022-05-29 11:40:31.317369: I tensorflow/core/tpu/tpu_api_dlsym_initializer.cc:116] Libtpu path is: libtpu.so
+WARNING: Logging before InitGoogle() is written to STDERR
+I0000 00:00:1653824431.408457    8741 tpu_initializer_helper.cc:100] libtpu.so is already in use by process with pid 6639. Not attempting to load libtpu.so in this process.
+2022-05-29 11:40:31.420760: I tensorflow/core/tpu/tpu_initializer_helper.cc:100] libtpu.so is already in use by process with pid 6639. Not attempting to load libtpu.so in this process.
+2022-05-29 11:40:32.979568: I tensorflow/stream_executor/tpu/tpu_platform_interface.cc:77] No TPU platform registered. Waiting 1 second and trying again... (4 tries left)
+2022-05-29 11:40:33.979915: I tensorflow/stream_executor/tpu/tpu_platform_interface.cc:77] No TPU platform registered. Waiting 1 second and trying again... (3 tries left)
+2022-05-29 11:40:34.980247: I tensorflow/stream_executor/tpu/tpu_platform_interface.cc:77] No TPU platform registered. Waiting 1 second and trying again... (2 tries left)
+2022-05-29 11:40:35.980563: I tensorflow/stream_executor/tpu/tpu_platform_interface.cc:77] No TPU platform registered. Waiting 1 second and trying again... (1 tries left)
+2022-05-29 11:40:36.980818: I tensorflow/stream_executor/tpu/tpu_platform_interface.cc:74] No TPU platform found.
+2022-05-29 11:40:36.981309: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/tensorflow/python/tpu/tpu_strategy_util.py", line 110, in initialize_tpu_system
+    output = _tpu_init_fn()
+  File "/usr/local/lib/python3.8/dist-packages/tensorflow/python/eager/function.py", line 2453, in __call__
+    return graph_function._call_flat(
+  File "/usr/local/lib/python3.8/dist-packages/tensorflow/python/eager/function.py", line 1860, in _call_flat
+    return self._build_call_outputs(self._inference_function.call(
+  File "/usr/local/lib/python3.8/dist-packages/tensorflow/python/eager/function.py", line 497, in call
+    outputs = execute.execute(
+  File "/usr/local/lib/python3.8/dist-packages/tensorflow/python/eager/execute.py", line 54, in quick_execute
+    tensors = pywrap_tfe.TFE_Py_Execute(ctx._handle, device_name, op_name,
+tensorflow.python.framework.errors_impl.InvalidArgumentError: No matching devices found for '/device:TPU_SYSTEM:0' [Op:__inference__tpu_init_fn_4]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "lstm1.py", line 472, in <module>
+    tpu = tf.distribute.cluster_resolver.TPUClusterResolver.connect(tpu='local')
+  File "/usr/local/lib/python3.8/dist-packages/tensorflow/python/distribute/cluster_resolver/tpu/tpu_cluster_resolver.py", line 110, in connect
+    tpu_strategy_util.initialize_tpu_system(resolver)
+  File "/usr/local/lib/python3.8/dist-packages/tensorflow/python/tpu/tpu_strategy_util.py", line 113, in initialize_tpu_system
+    raise errors.NotFoundError(
+tensorflow.python.framework.errors_impl.NotFoundError: TPUs not found in the cluster. Failed in initialization: No matching devices found for '/device:TPU_SYSTEM:0' [Op:__inference__tpu_init_fn_4]
