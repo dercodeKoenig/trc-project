@@ -15,11 +15,11 @@ name = "dqn_trading_transformer_large"
 log_folder = "./"
 candles_dir = "../candles/"
 
-training_parallel = 64
-warmup_parallel = 64
+training_parallel = 32
+warmup_parallel = 32
 warmup_steps = 20000
 
-batch_size = 256
+batch_size = 128
 gamma = 0.99
 memory_size = 3000000
 lr  = 0.0025
