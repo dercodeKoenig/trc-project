@@ -13,6 +13,7 @@ import time
 
 name = "dqn_trading_lstm"
 log_folder = "./"
+candles_dir = "../candles/"
 
 training_parallel = 32
 warmup_parallel = 32
@@ -135,8 +136,8 @@ class environment():
   
   def reset(self, first_reset = False):
     self.candles = None
-    candles_files = os.listdir("candles")
-    use_file = "candles/"+random.choice(candles_files)
+    candles_files = os.listdir(candles_dir)
+    use_file = candles_dir+random.choice(candles_files)
     #print(use_file)
     self.candles = Load(use_file)
     
