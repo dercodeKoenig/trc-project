@@ -1,0 +1,1 @@
+gcloud alpha compute tpus tpu-vm ssh tpu-node-4 --zone europe-west4-a
