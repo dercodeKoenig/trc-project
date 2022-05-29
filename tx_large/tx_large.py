@@ -16,7 +16,7 @@ log_folder = "./"
 candles_dir = "../candles/"
 
 training_parallel = 32
-warmup_parallel = 32
+warmup_parallel = 64
 warmup_steps = 20000
 
 batch_size = 128
@@ -578,15 +578,17 @@ with strategy.scope():
   x = tf.keras.layers.Dense(1024,activation = "relu")(x)
   x = tf.keras.layers.Dense(324,activation = "relu")(x)
 
+  x = tf.keras.layers.LayerNormalization()(x)
+
   x = Positions(seq_len, x.shape[-1])(x)
-  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
-  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
-  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
-  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
+  x = TransformerBlock(x.shape[2], 8, 324)(x,x)
+  x = TransformerBlock(x.shape[2], 8, 324)(x,x)
+  x = TransformerBlock(x.shape[2], 8, 324)(x,x)
+  x = TransformerBlock(x.shape[2], 8, 324)(x,x)
 
   x_end = tf.keras.layers.Lambda(lambda x: x[:,-1])(x)
   x_end = tf.keras.layers.Reshape((1,x.shape[2]))(x_end)
-  x = TransformerBlock(x.shape[2], 8, 256)(x_end,x)
+  x = TransformerBlock(x.shape[2], 8, 324)(x_end,x)
   x = tf.keras.layers.Flatten()(x)
 
   x = tf.keras.layers.Concatenate()([inputs_pos, x])
