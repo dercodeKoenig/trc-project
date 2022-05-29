@@ -577,6 +577,8 @@ with strategy.scope():
 
   x = tf.keras.layers.Dense(512,activation = "relu")(x)
   x = tf.keras.layers.Dense(256,activation = "relu")(x)
+  
+  x = tf.keras.layers.LayerNormalization()(x)
 
   x = Positions(seq_len, x.shape[-1])(x)
   x = TransformerBlock(x.shape[2], 8, 256)(x,x)
