@@ -15,3 +15,79 @@ WARNING:absl:`tf.distribute.experimental.TPUStrategy` is deprecated, please use 
 2022-05-29 22:46:54.028499: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:263] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
 2022-05-29 22:46:54.054655: I tensorflow/compiler/jit/xla_compilation_cache.cc:478] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
 2022-05-29 22:46:54.071313: W tensorflow/compiler/tf2xla/kernels/random_ops.cc:57] Warning: Using tf.random.uniform with XLA compilation will ignore seeds; consider using tf.random.stateless_uniform instead if reproducible behavior is desired. RandomUniform
+Model: "model"
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to                     
+==================================================================================================
+ input_1 (InputLayer)           [(None, 580, 6)]     0           []                               
+                                                                                                  
+ dense (Dense)                  (None, 580, 16)      112         ['input_1[0][0]']                
+                                                                                                  
+ dense_1 (Dense)                (None, 580, 16)      272         ['dense[0][0]']                  
+                                                                                                  
+ conv1d (Conv1D)                (None, 580, 64)      3136        ['dense_1[0][0]']                
+                                                                                                  
+ concatenate (Concatenate)      (None, 580, 80)      0           ['conv1d[0][0]',                 
+                                                                  'dense_1[0][0]']                
+                                                                                                  
+ dense_2 (Dense)                (None, 580, 64)      5184        ['concatenate[0][0]']            
+                                                                                                  
+ conv1d_1 (Conv1D)              (None, 580, 1024)    1377280     ['dense_2[0][0]']                
+                                                                                                  
+ concatenate_1 (Concatenate)    (None, 580, 1088)    0           ['conv1d_1[0][0]',               
+                                                                  'dense_2[0][0]']                
+                                                                                                  
+ dense_3 (Dense)                (None, 580, 1024)    1115136     ['concatenate_1[0][0]']          
+                                                                                                  
+ dense_4 (Dense)                (None, 580, 324)     332100      ['dense_3[0][0]']                
+                                                                                                  
+ layer_normalization (LayerNorm  (None, 580, 324)    648         ['dense_4[0][0]']                
+ alization)                                                                                       
+                                                                                                  
+ positions (Positions)          (None, 580, 324)     0           ['layer_normalization[0][0]']    
+                                                                                                  
+ transformer_block (Transformer  (None, 580, 324)    3579228     ['positions[0][0]',              
+ Block)                                                           'positions[0][0]']              
+                                                                                                  
+ transformer_block_1 (Transform  (None, 580, 324)    3579228     ['transformer_block[0][0]',      
+ erBlock)                                                         'transformer_block[0][0]']      
+                                                                                                  
+ transformer_block_2 (Transform  (None, 580, 324)    3579228     ['transformer_block_1[0][0]',    
+ erBlock)                                                         'transformer_block_1[0][0]']    
+                                                                                                  
+ transformer_block_3 (Transform  (None, 580, 324)    3579228     ['transformer_block_2[0][0]',    
+ erBlock)                                                         'transformer_block_2[0][0]']    
+                                                                                                  
+ lambda (Lambda)                (None, 324)          0           ['transformer_block_3[0][0]']    
+                                                                                                  
+ reshape (Reshape)              (None, 1, 324)       0           ['lambda[0][0]']                 
+                                                                                                  
+ transformer_block_4 (Transform  (None, 1, 324)      3579228     ['reshape[0][0]',                
+ erBlock)                                                         'transformer_block_3[0][0]']    
+                                                                                                  
+ input_2 (InputLayer)           [(None, 2)]          0           []                               
+                                                                                                  
+ flatten (Flatten)              (None, 324)          0           ['transformer_block_4[0][0]']    
+                                                                                                  
+ concatenate_2 (Concatenate)    (None, 326)          0           ['input_2[0][0]',                
+                                                                  'flatten[0][0]']                
+                                                                                                  
+ dense_15 (Dense)               (None, 512)          167424      ['concatenate_2[0][0]']          
+                                                                                                  
+ leaky_re_lu (LeakyReLU)        (None, 512)          0           ['dense_15[0][0]']               
+                                                                                                  
+ dense_16 (Dense)               (None, 512)          262656      ['leaky_re_lu[0][0]']            
+                                                                                                  
+ leaky_re_lu_1 (LeakyReLU)      (None, 512)          0           ['dense_16[0][0]']               
+                                                                                                  
+ dense_17 (Dense)               (None, 512)          262656      ['leaky_re_lu_1[0][0]']          
+                                                                                                  
+ leaky_re_lu_2 (LeakyReLU)      (None, 512)          0           ['dense_17[0][0]']               
+                                                                                                  
+ dense_18 (Dense)               (None, 3)            1536        ['leaky_re_lu_2[0][0]']          
+                                                                                                  
+==================================================================================================
+Total params: 21,424,280
+Trainable params: 21,424,280
+Non-trainable params: 0
+__________________________________________________________________________________________________
