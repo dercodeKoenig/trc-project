@@ -11,12 +11,12 @@ from collections import deque
 import time
 
 
-name = "dqn_trading_transformer"
-log_folder = "./tx_small/"
+name = "dqn_trading_transformer_large"
+log_folder = "./"
 
 training_parallel = 32
 warmup_parallel = 32
-warmup_steps = 20000
+warmup_steps = 30000
 
 batch_size = 128
 gamma = 0.99
@@ -24,7 +24,7 @@ memory_size = 2000000
 lr  = 0.00025
 seq_len = 580
 
-soft_reward_inc = 1.2
+soft_reward_inc = 1.1
 comission = 20/100000
 
 resume = True
@@ -569,13 +569,13 @@ with strategy.scope():
   x2 = tf.keras.layers.Conv1D(64, 3,activation="relu", padding="same")(x)
   x = tf.keras.layers.Concatenate()([x2,x])
 
-  x = tf.keras.layers.Dense(32,activation = "relu")(x)
+  x = tf.keras.layers.Dense(64,activation = "relu")(x)
 
-  x2 = tf.keras.layers.Conv1D(512, 21,activation="relu", padding="same")(x)
+  x2 = tf.keras.layers.Conv1D(1024, 21,activation="relu", padding="same")(x)
   x = tf.keras.layers.Concatenate()([x2,x])
 
-  x = tf.keras.layers.Dense(512,activation = "relu")(x)
-  x = tf.keras.layers.Dense(256,activation = "relu")(x)
+  x = tf.keras.layers.Dense(1024,activation = "relu")(x)
+  x = tf.keras.layers.Dense(324,activation = "relu")(x)
 
   x = Positions(seq_len, x.shape[-1])(x)
   x = TransformerBlock(x.shape[2], 8, 256)(x,x)

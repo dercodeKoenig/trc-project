@@ -11,8 +11,8 @@ from collections import deque
 import time
 
 
-name = "dqn_trading_lstm"
-log_folder = "./lstm/"
+name = "dqn_trading_transformer"
+log_folder = "./"
 
 training_parallel = 32
 warmup_parallel = 32
@@ -20,7 +20,7 @@ warmup_steps = 20000
 
 batch_size = 128
 gamma = 0.99
-memory_size = 1000000
+memory_size = 2000000
 lr  = 0.00025
 seq_len = 580
 
@@ -476,6 +476,84 @@ strategy = tf.distribute.experimental.TPUStrategy(tpu)
 
 
 
+
+class TransformerBlock(tf.keras.layers.Layer):
+    embed_dim = 0
+    num_heads = 0
+    ff_dim = 0 
+    rate=0
+    def __init__(self, embed_dim, num_heads, ff_dim, rate=0.1, **kwargs):
+        self.embed_dim = embed_dim
+        self.num_heads = num_heads
+        self.ff_dim = ff_dim
+        self.rate = rate
+
+
+        super(TransformerBlock, self).__init__()
+        self.att = tf.keras.layers.MultiHeadAttention(num_heads=num_heads, key_dim=embed_dim)
+        self.ffn = tf.keras.Sequential(
+            [tf.keras.layers.Dense(ff_dim, activation="relu"), tf.keras.layers.Dense(embed_dim),]
+        )
+        self.layernorm1 = tf.keras.layers.LayerNormalization(epsilon=1e-6)
+        self.layernorm2 = tf.keras.layers.LayerNormalization(epsilon=1e-6)
+        self.dropout1 = tf.keras.layers.Dropout(rate)
+        self.dropout2 = tf.keras.layers.Dropout(rate)
+
+    def get_config(self):
+        cfg = super().get_config()
+        cfg.update()
+        cfg.update({
+            'embed_dim': self.embed_dim,
+            'num_heads': self.num_heads,
+            'ff_dim': self.ff_dim,
+            'rate': self.rate,
+        })
+        return cfg  
+    def call(self, q, k, training = False):
+        attn_output = self.att(q, k)
+        attn_output = self.dropout1(attn_output, training=training)
+        out1 = self.layernorm1(q + attn_output)
+        ffn_output = self.ffn(out1)
+        ffn_output = self.dropout2(ffn_output, training=training)
+        return self.layernorm2(out1 + ffn_output)
+
+    
+def getPositionEncoding(seq_len, d, n=10000):
+    P = np.zeros((seq_len, d))
+    for k in range(seq_len):
+        for i in np.arange(int(d/2)):
+            denominator = np.power(n, 2*i/d)
+            P[k, 2*i] = np.sin(k/denominator)
+            P[k, 2*i+1] = np.cos(k/denominator)
+    return P[::]
+
+class Positions(tf.keras.layers.Layer):
+    P = []
+    d = 0
+    seq_len = 0
+    def __init__(self, seq_len, d, **kwargs):
+        super(Positions, self).__init__()
+        self.seq_len = seq_len
+        self.d = d
+        self.p = getPositionEncoding(seq_len, d)
+        
+
+    def call(self, x):
+        return x + self.p
+
+    def get_config(self):
+        cfg = super().get_config()
+        cfg.update()
+        cfg.update({
+            'p': self.p,
+            'seq_len': self.seq_len,
+            'd': self.d
+        })
+        return cfg  
+
+
+
+
 tf.keras.backend.clear_session()
 
 with strategy.scope():
@@ -499,13 +577,16 @@ with strategy.scope():
   x = tf.keras.layers.Dense(512,activation = "relu")(x)
   x = tf.keras.layers.Dense(256,activation = "relu")(x)
 
-  x2 = tf.keras.layers.Conv1D(1024, 21,activation="relu", padding="same")(x)
-  x = tf.keras.layers.Concatenate()([x2,x])
+  x = Positions(seq_len, x.shape[-1])(x)
+  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
+  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
+  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
+  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
 
-  x = tf.keras.layers.Dense(512,activation = "relu")(x)
-  x = tf.keras.layers.Dense(256,activation = "relu")(x)
-
-  x = tf.keras.layers.LSTM(256, activation = "tanh")(x)
+  x_end = tf.keras.layers.Lambda(lambda x: x[:,-1])(x)
+  x_end = tf.keras.layers.Reshape((1,x.shape[2]))(x_end)
+  x = TransformerBlock(x.shape[2], 8, 256)(x_end,x)
+  x = tf.keras.layers.Flatten()(x)
 
   x = tf.keras.layers.Concatenate()([inputs_pos, x])
 
