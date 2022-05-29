@@ -12,7 +12,7 @@ import time
 
 
 name = "dqn_trading_lstm"
-log_folder = "./"
+log_folder = "./lstm/"
 
 training_parallel = 32
 warmup_parallel = 32

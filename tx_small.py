@@ -12,7 +12,7 @@ import time
 
 
 name = "dqn_trading_transformer"
-log_folder = "./"
+log_folder = "./tx_small/"
 
 training_parallel = 32
 warmup_parallel = 32
@@ -20,7 +20,7 @@ warmup_steps = 20000
 
 batch_size = 128
 gamma = 0.99
-memory_size = 1000000
+memory_size = 2000000
 lr  = 0.00025
 seq_len = 580
 

@@ -12,7 +12,7 @@ import time
 
 
 name = "dqn_trading_transformer_large"
-log_folder = "./"
+log_folder = "./tx_large/"
 
 training_parallel = 32
 warmup_parallel = 32
