@@ -1,0 +1,125 @@
+2022-05-29 19:42:54.108758: I tensorflow/core/tpu/tpu_initializer_helper.cc:100] libtpu.so is already in use by process with pid 3600. Not attempting to load libtpu.so in this process.
+2022-05-29 19:42:54.108816: I tensorflow/core/tpu/tpu_api_dlsym_initializer.cc:116] Libtpu path is: libtpu.so
+WARNING: Logging before InitGoogle() is written to STDERR
+I0000 00:00:1653853374.159900    9060 tpu_initializer_helper.cc:100] libtpu.so is already in use by process with pid 3600. Not attempting to load libtpu.so in this process.
+2022-05-29 19:42:54.171705: I tensorflow/core/tpu/tpu_initializer_helper.cc:100] libtpu.so is already in use by process with pid 3600. Not attempting to load libtpu.so in this process.
+2022-05-29 19:42:55.752248: I tensorflow/stream_executor/tpu/tpu_platform_interface.cc:77] No TPU platform registered. Waiting 1 second and trying again... (4 tries left)
+2022-05-29 19:42:56.752500: I tensorflow/stream_executor/tpu/tpu_platform_interface.cc:77] No TPU platform registered. Waiting 1 second and trying again... (3 tries left)
+2022-05-29 19:42:57.752779: I tensorflow/stream_executor/tpu/tpu_platform_interface.cc:77] No TPU platform registered. Waiting 1 second and trying again... (2 tries left)
+2022-05-29 19:42:58.753089: I tensorflow/stream_executor/tpu/tpu_platform_interface.cc:77] No TPU platform registered. Waiting 1 second and trying again... (1 tries left)
+2022-05-29 19:42:59.753306: I tensorflow/stream_executor/tpu/tpu_platform_interface.cc:74] No TPU platform found.
+2022-05-29 19:42:59.753740: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/tensorflow/python/tpu/tpu_strategy_util.py", line 110, in initialize_tpu_system
+    output = _tpu_init_fn()
+  File "/usr/local/lib/python3.8/dist-packages/tensorflow/python/eager/function.py", line 2453, in __call__
+    return graph_function._call_flat(
+  File "/usr/local/lib/python3.8/dist-packages/tensorflow/python/eager/function.py", line 1860, in _call_flat
+    return self._build_call_outputs(self._inference_function.call(
+  File "/usr/local/lib/python3.8/dist-packages/tensorflow/python/eager/function.py", line 497, in call
+    outputs = execute.execute(
+  File "/usr/local/lib/python3.8/dist-packages/tensorflow/python/eager/execute.py", line 54, in quick_execute
+    tensors = pywrap_tfe.TFE_Py_Execute(ctx._handle, device_name, op_name,
+tensorflow.python.framework.errors_impl.InvalidArgumentError: No matching devices found for '/device:TPU_SYSTEM:0' [Op:__inference__tpu_init_fn_4]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "tx_large.py", line 473, in <module>
+    tpu = tf.distribute.cluster_resolver.TPUClusterResolver.connect(tpu='local')
+  File "/usr/local/lib/python3.8/dist-packages/tensorflow/python/distribute/cluster_resolver/tpu/tpu_cluster_resolver.py", line 110, in connect
+    tpu_strategy_util.initialize_tpu_system(resolver)
+  File "/usr/local/lib/python3.8/dist-packages/tensorflow/python/tpu/tpu_strategy_util.py", line 113, in initialize_tpu_system
+    raise errors.NotFoundError(
+tensorflow.python.framework.errors_impl.NotFoundError: TPUs not found in the cluster. Failed in initialization: No matching devices found for '/device:TPU_SYSTEM:0' [Op:__inference__tpu_init_fn_4]
+2022-05-29 19:46:50.208343: I tensorflow/core/tpu/tpu_api_dlsym_initializer.cc:116] Libtpu path is: libtpu.so
+Missing key: 'TWIST' in 'tpu-env' (yaml) instance metadata.
+2022-05-29 19:47:02.153252: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-05-29 19:47:06.271128: I tensorflow/compiler/xla/service/service.cc:170] XLA service 0x60ed980 initialized for platform TPU (this does not guarantee that XLA will be used). Devices:
+2022-05-29 19:47:06.271164: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (0): TPU, 2a886c8
+2022-05-29 19:47:06.271172: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (1): TPU, 2a886c8
+2022-05-29 19:47:06.271178: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (2): TPU, 2a886c8
+2022-05-29 19:47:06.271184: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (3): TPU, 2a886c8
+2022-05-29 19:47:06.271191: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (4): TPU, 2a886c8
+2022-05-29 19:47:06.271197: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (5): TPU, 2a886c8
+2022-05-29 19:47:06.271203: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (6): TPU, 2a886c8
+2022-05-29 19:47:06.271209: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (7): TPU, 2a886c8
+WARNING:absl:`tf.distribute.experimental.TPUStrategy` is deprecated, please use  the non experimental symbol `tf.distribute.TPUStrategy` instead.
+2022-05-29 19:47:14.274137: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:263] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+2022-05-29 19:47:15.231736: I tensorflow/compiler/jit/xla_compilation_cache.cc:478] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+2022-05-29 19:47:15.371606: W tensorflow/compiler/tf2xla/kernels/random_ops.cc:57] Warning: Using tf.random.uniform with XLA compilation will ignore seeds; consider using tf.random.stateless_uniform instead if reproducible behavior is desired. RandomUniform
+Model: "model"
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to                     
+==================================================================================================
+ input_1 (InputLayer)           [(None, 580, 6)]     0           []                               
+                                                                                                  
+ dense (Dense)                  (None, 580, 16)      112         ['input_1[0][0]']                
+                                                                                                  
+ dense_1 (Dense)                (None, 580, 16)      272         ['dense[0][0]']                  
+                                                                                                  
+ conv1d (Conv1D)                (None, 580, 64)      3136        ['dense_1[0][0]']                
+                                                                                                  
+ concatenate (Concatenate)      (None, 580, 80)      0           ['conv1d[0][0]',                 
+                                                                  'dense_1[0][0]']                
+                                                                                                  
+ dense_2 (Dense)                (None, 580, 64)      5184        ['concatenate[0][0]']            
+                                                                                                  
+ conv1d_1 (Conv1D)              (None, 580, 1024)    1377280     ['dense_2[0][0]']                
+                                                                                                  
+ concatenate_1 (Concatenate)    (None, 580, 1088)    0           ['conv1d_1[0][0]',               
+                                                                  'dense_2[0][0]']                
+                                                                                                  
+ dense_3 (Dense)                (None, 580, 1024)    1115136     ['concatenate_1[0][0]']          
+                                                                                                  
+ dense_4 (Dense)                (None, 580, 324)     332100      ['dense_3[0][0]']                
+                                                                                                  
+ positions (Positions)          (None, 580, 324)     0           ['dense_4[0][0]']                
+                                                                                                  
+ transformer_block (Transformer  (None, 580, 324)    3535096     ['positions[0][0]',              
+ Block)                                                           'positions[0][0]']              
+                                                                                                  
+ transformer_block_1 (Transform  (None, 580, 324)    3535096     ['transformer_block[0][0]',      
+ erBlock)                                                         'transformer_block[0][0]']      
+                                                                                                  
+ transformer_block_2 (Transform  (None, 580, 324)    3535096     ['transformer_block_1[0][0]',    
+ erBlock)                                                         'transformer_block_1[0][0]']    
+                                                                                                  
+ transformer_block_3 (Transform  (None, 580, 324)    3535096     ['transformer_block_2[0][0]',    
+ erBlock)                                                         'transformer_block_2[0][0]']    
+                                                                                                  
+ lambda (Lambda)                (None, 324)          0           ['transformer_block_3[0][0]']    
+                                                                                                  
+ reshape (Reshape)              (None, 1, 324)       0           ['lambda[0][0]']                 
+                                                                                                  
+ transformer_block_4 (Transform  (None, 1, 324)      3535096     ['reshape[0][0]',                
+ erBlock)                                                         'transformer_block_3[0][0]']    
+                                                                                                  
+ input_2 (InputLayer)           [(None, 2)]          0           []                               
+                                                                                                  
+ flatten (Flatten)              (None, 324)          0           ['transformer_block_4[0][0]']    
+                                                                                                  
+ concatenate_2 (Concatenate)    (None, 326)          0           ['input_2[0][0]',                
+                                                                  'flatten[0][0]']                
+                                                                                                  
+ dense_15 (Dense)               (None, 512)          167424      ['concatenate_2[0][0]']          
+                                                                                                  
+ leaky_re_lu (LeakyReLU)        (None, 512)          0           ['dense_15[0][0]']               
+                                                                                                  
+ dense_16 (Dense)               (None, 512)          262656      ['leaky_re_lu[0][0]']            
+                                                                                                  
+ leaky_re_lu_1 (LeakyReLU)      (None, 512)          0           ['dense_16[0][0]']               
+                                                                                                  
+ dense_17 (Dense)               (None, 512)          262656      ['leaky_re_lu_1[0][0]']          
+                                                                                                  
+ leaky_re_lu_2 (LeakyReLU)      (None, 512)          0           ['dense_17[0][0]']               
+                                                                                                  
+ dense_18 (Dense)               (None, 3)            1536        ['leaky_re_lu_2[0][0]']          
+                                                                                                  
+==================================================================================================
+Total params: 21,202,972
+Trainable params: 21,202,972
+Non-trainable params: 0
+__________________________________________________________________________________________________
