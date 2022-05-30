@@ -9,6 +9,7 @@ import random
 import pickle
 from collections import deque
 import time
+import math
 
 
 name = "dqn_trading_lstm"
@@ -17,13 +18,13 @@ candles_dir = "../candles/"
 
 training_parallel = 32
 warmup_parallel = 32
-warmup_steps = 20000
+warmup_steps = 5000
 
 batch_size = 128
 gamma = 0.99
 memory_size = 1000000
-lr  = 0.00025
-seq_len = 580
+lr  = 0.0025
+seq_len = 550
 
 soft_reward_inc = 1.2
 comission = 20/100000
@@ -131,7 +132,7 @@ class environment():
             
             inference_data = sample_to_x(candles)
             
-            return inference_data, np.array([self.position, self.current_win])
+            return inference_data, np.array([self.position, math.tanh(self.current_win)])
 
   
   def reset(self, first_reset = False):
@@ -491,17 +492,21 @@ with strategy.scope():
 
   x2 = tf.keras.layers.Conv1D(64, 3,activation="relu", padding="same")(x)
   x = tf.keras.layers.Concatenate()([x2,x])
+  x = tf.keras.layers.LayerNormalization()(x)
 
   x = tf.keras.layers.Dense(32,activation = "relu")(x)
 
   x2 = tf.keras.layers.Conv1D(512, 21,activation="relu", padding="same")(x)
   x = tf.keras.layers.Concatenate()([x2,x])
+  x = tf.keras.layers.LayerNormalization()(x)
 
   x = tf.keras.layers.Dense(512,activation = "relu")(x)
   x = tf.keras.layers.Dense(256,activation = "relu")(x)
 
   x2 = tf.keras.layers.Conv1D(1024, 21,activation="relu", padding="same")(x)
   x = tf.keras.layers.Concatenate()([x2,x])
+  x = tf.keras.layers.LayerNormalization()(x)    
+
 
   x = tf.keras.layers.Dense(512,activation = "relu")(x)
   x = tf.keras.layers.Dense(256,activation = "relu")(x)

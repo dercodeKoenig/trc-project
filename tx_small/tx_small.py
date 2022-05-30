@@ -8,6 +8,7 @@ from tqdm import tqdm
 import random
 import pickle
 from collections import deque
+import math
 import time
 
 
@@ -131,7 +132,7 @@ class environment():
             
             inference_data = sample_to_x(candles)
             
-            return inference_data, np.array([self.position, self.current_win])
+            return inference_data, np.array([self.position, math.tanh(self.current_win)])
 
   
   def reset(self, first_reset = False):
