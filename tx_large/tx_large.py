@@ -22,8 +22,8 @@ warmup_steps = 5000
 batch_size = 128
 gamma = 0.99
 memory_size = 3000000
-lr  = 0.0025
-seq_len = 580
+lr  = 0.0005
+seq_len = 550
 
 soft_reward_inc = 1.1
 comission = 20/100000
@@ -564,18 +564,9 @@ with strategy.scope():
 
   x = inputs_1
 
-  x = tf.keras.layers.Dense(16,activation = "relu")(x)
-  x = tf.keras.layers.Dense(16,activation = "relu")(x)
-
-  x2 = tf.keras.layers.Conv1D(64, 3,activation="relu", padding="same")(x)
+  x2 = tf.keras.layers.Conv1D(512, 21,activation="relu", padding="same")(x)
   x = tf.keras.layers.Concatenate()([x2,x])
 
-  x = tf.keras.layers.Dense(64,activation = "relu")(x)
-
-  x2 = tf.keras.layers.Conv1D(1024, 21,activation="relu", padding="same")(x)
-  x = tf.keras.layers.Concatenate()([x2,x])
-
-  x = tf.keras.layers.Dense(1024,activation = "relu")(x)
   x = tf.keras.layers.Dense(324,activation = "relu")(x)
 
   x = tf.keras.layers.LayerNormalization()(x)
