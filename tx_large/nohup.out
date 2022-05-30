@@ -1,0 +1,82 @@
+2022-05-30 21:38:54.319133: I tensorflow/core/tpu/tpu_api_dlsym_initializer.cc:116] Libtpu path is: libtpu.so
+Missing key: 'TWIST' in 'tpu-env' (yaml) instance metadata.
+2022-05-30 21:39:06.438145: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-05-30 21:39:10.472349: I tensorflow/compiler/xla/service/service.cc:170] XLA service 0x60b7800 initialized for platform TPU (this does not guarantee that XLA will be used). Devices:
+2022-05-30 21:39:10.472409: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (0): TPU, 2a886c8
+2022-05-30 21:39:10.472421: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (1): TPU, 2a886c8
+2022-05-30 21:39:10.472430: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (2): TPU, 2a886c8
+2022-05-30 21:39:10.472439: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (3): TPU, 2a886c8
+2022-05-30 21:39:10.472458: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (4): TPU, 2a886c8
+2022-05-30 21:39:10.472467: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (5): TPU, 2a886c8
+2022-05-30 21:39:10.472478: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (6): TPU, 2a886c8
+2022-05-30 21:39:10.472491: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (7): TPU, 2a886c8
+WARNING:absl:`tf.distribute.experimental.TPUStrategy` is deprecated, please use  the non experimental symbol `tf.distribute.TPUStrategy` instead.
+2022-05-30 21:39:17.510209: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:263] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+2022-05-30 21:39:18.416934: I tensorflow/compiler/jit/xla_compilation_cache.cc:478] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+2022-05-30 21:39:18.477679: W tensorflow/compiler/tf2xla/kernels/random_ops.cc:57] Warning: Using tf.random.uniform with XLA compilation will ignore seeds; consider using tf.random.stateless_uniform instead if reproducible behavior is desired. RandomUniform
+Model: "model"
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to                     
+==================================================================================================
+ input_1 (InputLayer)           [(None, 550, 6)]     0           []                               
+                                                                                                  
+ conv1d (Conv1D)                (None, 550, 512)     65024       ['input_1[0][0]']                
+                                                                                                  
+ concatenate (Concatenate)      (None, 550, 518)     0           ['conv1d[0][0]',                 
+                                                                  'input_1[0][0]']                
+                                                                                                  
+ dense (Dense)                  (None, 550, 324)     168156      ['concatenate[0][0]']            
+                                                                                                  
+ layer_normalization (LayerNorm  (None, 550, 324)    648         ['dense[0][0]']                  
+ alization)                                                                                       
+                                                                                                  
+ positions (Positions)          (None, 550, 324)     0           ['layer_normalization[0][0]']    
+                                                                                                  
+ transformer_block (Transformer  (None, 550, 324)    3579228     ['positions[0][0]',              
+ Block)                                                           'positions[0][0]']              
+                                                                                                  
+ transformer_block_1 (Transform  (None, 550, 324)    3579228     ['transformer_block[0][0]',      
+ erBlock)                                                         'transformer_block[0][0]']      
+                                                                                                  
+ transformer_block_2 (Transform  (None, 550, 324)    3579228     ['transformer_block_1[0][0]',    
+ erBlock)                                                         'transformer_block_1[0][0]']    
+                                                                                                  
+ transformer_block_3 (Transform  (None, 550, 324)    3579228     ['transformer_block_2[0][0]',    
+ erBlock)                                                         'transformer_block_2[0][0]']    
+                                                                                                  
+ lambda (Lambda)                (None, 324)          0           ['transformer_block_3[0][0]']    
+                                                                                                  
+ reshape (Reshape)              (None, 1, 324)       0           ['lambda[0][0]']                 
+                                                                                                  
+ transformer_block_4 (Transform  (None, 1, 324)      3579228     ['reshape[0][0]',                
+ erBlock)                                                         'transformer_block_3[0][0]']    
+                                                                                                  
+ input_2 (InputLayer)           [(None, 2)]          0           []                               
+                                                                                                  
+ flatten (Flatten)              (None, 324)          0           ['transformer_block_4[0][0]']    
+                                                                                                  
+ concatenate_1 (Concatenate)    (None, 326)          0           ['input_2[0][0]',                
+                                                                  'flatten[0][0]']                
+                                                                                                  
+ dense_11 (Dense)               (None, 512)          167424      ['concatenate_1[0][0]']          
+                                                                                                  
+ leaky_re_lu (LeakyReLU)        (None, 512)          0           ['dense_11[0][0]']               
+                                                                                                  
+ dense_12 (Dense)               (None, 512)          262656      ['leaky_re_lu[0][0]']            
+                                                                                                  
+ leaky_re_lu_1 (LeakyReLU)      (None, 512)          0           ['dense_12[0][0]']               
+                                                                                                  
+ dense_13 (Dense)               (None, 512)          262656      ['leaky_re_lu_1[0][0]']          
+                                                                                                  
+ leaky_re_lu_2 (LeakyReLU)      (None, 512)          0           ['dense_13[0][0]']               
+                                                                                                  
+ dense_14 (Dense)               (None, 3)            1536        ['leaky_re_lu_2[0][0]']          
+                                                                                                  
+==================================================================================================
+Total params: 18,824,240
+Trainable params: 18,824,240
+Non-trainable params: 0
+__________________________________________________________________________________________________
+2022-05-30 21:40:43.585724: I tensorflow/core/tpu/graph_rewrite/encapsulate_tpu_computations_pass.cc:254] Subgraph fingerprint:1629732705888979313
+2022-05-30 21:40:43.701171: E tensorflow/core/grappler/optimizers/meta_optimizer.cc:903] model_pruner failed: INVALID_ARGUMENT: Graph does not contain terminal node StatefulPartitionedCall.
