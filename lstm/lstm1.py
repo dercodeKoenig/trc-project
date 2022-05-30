@@ -29,8 +29,8 @@ seq_len = 550
 soft_reward_inc = 1.2
 comission = 20/100000
 
-resume = True
-#resume = False
+#resume = True
+resume = False
 
 def sample_to_x(sample):
         
@@ -506,7 +506,6 @@ with strategy.scope():
   x2 = tf.keras.layers.Conv1D(1024, 21,activation="relu", padding="same")(x)
   x = tf.keras.layers.Concatenate()([x2,x])
   x = tf.keras.layers.LayerNormalization()(x)    
-
 
   x = tf.keras.layers.Dense(512,activation = "relu")(x)
   x = tf.keras.layers.Dense(256,activation = "relu")(x)
