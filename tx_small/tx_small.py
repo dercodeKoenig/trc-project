@@ -28,8 +28,8 @@ seq_len = 550
 soft_reward_inc = 1.1
 comission = 20/100000
 
-#resume = True
-resume = False
+resume = True
+#resume = False
 
 def sample_to_x(sample):
         
