@@ -23,7 +23,7 @@ warmup_steps = 5000
 batch_size = 128
 gamma = 0.99
 memory_size = 3000000
-lr  = 0.005
+lr  = 0.0005
 seq_len = 550
 
 soft_reward_inc = 1.1
