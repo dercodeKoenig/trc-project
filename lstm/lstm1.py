@@ -17,13 +17,13 @@ candles_dir = "../candles/"
 
 training_parallel = 32
 warmup_parallel = 32
-warmup_steps = 20000
+warmup_steps = 5000
 
 batch_size = 128
 gamma = 0.99
 memory_size = 1000000
-lr  = 0.00025
-seq_len = 580
+lr  = 0.0025
+seq_len = 550
 
 soft_reward_inc = 1.2
 comission = 20/100000
