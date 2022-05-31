@@ -32,7 +32,7 @@ comission = 20/100000
 #resume = True
 resume = False
 
-def sample_to_x_y(sample):
+def sample_to_x(sample):
         
                 current_close = sample[-1].c
 
