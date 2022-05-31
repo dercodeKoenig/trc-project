@@ -21,9 +21,9 @@ warmup_parallel = 32
 warmup_steps = 5000
 
 batch_size = 128
-gamma = 0.99
+gamma = 0.95
 memory_size = 3000000
-lr  = 0.01
+lr  = 0.005
 seq_len = 550
 
 soft_reward_inc = 1.1
@@ -597,8 +597,8 @@ agent = DQNAgent(
     gamma=gamma,
     optimizer = opt,
     batch_size = batch_size, 
-    target_model_sync = 100,
-    exploration = 0.05,
+    target_model_sync = 1000,
+    exploration = 0.02,
     name=log_folder+name+".h5")
 
 if resume:
