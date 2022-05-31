@@ -26,7 +26,7 @@ memory_size = 1000000
 lr  = 0.0025
 seq_len = 550
 
-soft_reward_inc = 1.2
+soft_reward_inc = 1.1
 comission = 20/100000
 
 resume = True
