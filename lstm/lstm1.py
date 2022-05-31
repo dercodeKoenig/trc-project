@@ -29,70 +29,46 @@ seq_len = 550
 soft_reward_inc = 1.2
 comission = 20/100000
 
-resume = True
-#resume = False
+#resume = True
+resume = False
 
-def sample_to_x(sample):
+
+def sample_to_x_y(sample):
         
                 current_close = sample[-1].c
 
                 prev_close = [candle.c for candle in sample]
                 prev_high = [candle.h for candle in sample]
                 prev_low = [candle.l for candle in sample]
+                
 
                 prev_sma21 = [candle.sma21 for candle in sample]
-                #prev_sma50 = [candle.sma50 for candle in sample]
                 prev_sma200 = [candle.sma200 for candle in sample]
                 
-                #dl = [candle.dl for candle in sample]
-                #dh = [candle.dh for candle in sample]
-
-                #dl_relative = [-(current_close - dl[o]) / dl[o] for o in range(seq_len)]
-                #dh_relative = [-(current_close - dh[o]) / dh[o] for o in range(seq_len)]
                 
-                prev_sma21_relative = [-(current_close - prev_sma21[o]) / prev_sma21[o] for o in range(seq_len)]
-                #prev_sma50_relative = [-(current_close - prev_sma50[o]) / prev_sma50[o] for o in range(seq_len)]
-                prev_sma200_relative = [-(current_close - prev_sma200[o]) / prev_sma200[o] for o in range(seq_len)]
+                prev_sma21_relative = [(prev_close[o] - prev_sma21[o]) / prev_sma21[o]*100 for o in range(seq_len)]
+                prev_sma200_relative = [(prev_close[o] - prev_sma200[o]) / prev_sma200[o]*100 for o in range(seq_len)]
 
-                prev_close_relative = [-(current_close - prev_close[o]) / prev_close[o] for o in range(seq_len)]
-                prev_high_relative = [-(current_close - prev_high[o]) / prev_high[o] for o in range(seq_len)]
-                prev_low_relative = [-(current_close - prev_low[o]) / prev_low[o] for o in range(seq_len)]
-
+                prev_close_relative = [0] + [(prev_close[o+1] - prev_close[o]) / prev_close[o]*1000 for o in range(seq_len-1)]
+                prev_high_relative = [(prev_close[o] - prev_high[o]) / prev_close[o]*1000 for o in range(seq_len)]
+                prev_low_relative = [(prev_close[o] - prev_low[o]) / prev_close[o]*1000 for o in range(seq_len)]
                 
-                #scale = 1 / (sample[-1].atr_value / sample[-1].c)
-                maxv = max(prev_high_relative)
-                minv = min(prev_low_relative)
-                d = maxv-minv
-                scale = 1 / d
-                #scale = 1000 # scale price: 0.1% -> 1
 
-                prev_sma21_relative_scaled = [i * scale for i in prev_sma21_relative]
-                #prev_sma50_relative_scaled = [i * scale for i in prev_sma50_relative]
-                prev_sma200_relative_scaled = [i * scale for i in prev_sma200_relative]
-
-                prev_close_relative_scaled = [i * scale for i in prev_close_relative]
-                prev_low_relative_scaled = [i * scale for i in prev_low_relative]
-                prev_high_relative_scaled = [i * scale for i in prev_high_relative]
-
-                #dl_rel_scaled = [i * scale for i in dl_relative]
-                #dh_rel_scaled = [i * scale for i in dh_relative]
                 
                 prev_rsi_14 = [candle.rsi14 for candle in sample]
-
+                
 
                 x = []
                 for o in range(len(prev_close)):
                     ts = []
-                    ts.append(prev_close_relative_scaled[o])
-                    ts.append(prev_high_relative_scaled[o])
-                    ts.append(prev_low_relative_scaled[o])
 
-                    ts.append(prev_sma21_relative_scaled[o])
-                    #ts.append(prev_sma50_relative_scaled[o])
-                    ts.append(prev_sma200_relative_scaled[o])
                     
-                    #ts.append(dh_rel_scaled[o])
-                    #ts.append(dl_rel_scaled[o])
+                    ts.append(prev_close_relative[o])
+                    ts.append(prev_high_relative[o])
+                    ts.append(prev_low_relative[o])
+                    
+                    ts.append(prev_sma21_relative[o])
+                    ts.append(prev_sma200_relative[o])
                     
                     ts.append(prev_rsi_14[o])
 
