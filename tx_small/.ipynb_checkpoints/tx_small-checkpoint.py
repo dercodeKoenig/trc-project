@@ -29,8 +29,8 @@ seq_len = 550
 soft_reward_inc = 1.05
 comission = 10/100000
 
-resume = True
-#resume = False
+#resume = True
+resume = False
 
 def sample_to_x(sample):
         
@@ -540,32 +540,59 @@ with strategy.scope():
 
   x = inputs_1
 
-  x = tf.keras.layers.Dense(16,activation = "relu")(x)
-  x = tf.keras.layers.Dense(16,activation = "relu")(x)
-
   x2 = tf.keras.layers.Conv1D(64, 3,activation="relu", padding="same")(x)
+  x = tf.keras.layers.Dense(16, activation = "relu")(x)
   x = tf.keras.layers.Concatenate()([x2,x])
 
-  x = tf.keras.layers.Dense(32,activation = "relu")(x)
-
-  x2 = tf.keras.layers.Conv1D(512, 21,activation="relu", padding="same")(x)
+  x2 = tf.keras.layers.LSTM(32, return_sequences = True)(x)
   x = tf.keras.layers.Concatenate()([x2,x])
 
-  x = tf.keras.layers.Dense(512,activation = "relu")(x)
-  x = tf.keras.layers.Dense(256,activation = "relu")(x)
+  x2 = tf.keras.layers.Conv1D(64, 3, activation="relu", padding="same")(x)
+  x = tf.keras.layers.Concatenate()([x2,x])
+  x = tf.keras.layers.Dense(64,activation = "relu")(x)
+  x = tf.keras.layers.MaxPooling1D()(x)
+  
+  x2 = tf.keras.layers.Conv1D(64, 3, activation="relu", padding="same")(x)
+  x = tf.keras.layers.Concatenate()([x2,x])
+  x = tf.keras.layers.Dense(64,activation = "relu")(x)
+  x = tf.keras.layers.MaxPooling1D()(x)
   
   x = tf.keras.layers.LayerNormalization()(x)
 
-  x = Positions(seq_len, x.shape[-1])(x)
-  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
-  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
-  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
-  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
+  x = Positions(x.shape[-2], x.shape[-1])(x)
+  x = TransformerBlock(x.shape[2], 6, 256)(x,x)
+  x = TransformerBlock(x.shape[2], 6, 256)(x,x)
+  x = TransformerBlock(x.shape[2], 6, 256)(x,x)
+  x = TransformerBlock(x.shape[2], 6, 256)(x,x)
 
-  x_end = tf.keras.layers.Lambda(lambda x: x[:,-1])(x)
-  x_end = tf.keras.layers.Reshape((1,x.shape[2]))(x_end)
-  x = TransformerBlock(x.shape[2], 8, 256)(x_end,x)
-  x = tf.keras.layers.Flatten()(x)
+  x_end = tf.keras.layers.Lambda(lambda x: x[:,-5:])(inputs_1)
+  
+  x_end_2 = tf.keras.layers.Flatten()(x_end)
+  x_end_2 = tf.keras.layers.Dense(128, activation = "relu")(x_end_2)
+  x_end_2 = tf.keras.layers.Dense(128, activation = "relu")(x_end_2)
+  x_end_2 = tf.keras.layers.Dense(5*x_end.shape[2], activation = "relu")(x_end_2)
+  x_end_2 = tf.keras.layers.Reshape((5,x_end.shape[2]))(x_end_2)
+  x_end = tf.keras.layers.Add()([x_end, x_end_2])
+    
+  x_end_2 = tf.keras.layers.Conv1D(32,2, activation = "relu", padding = "same")(x_end)
+  x_end = tf.keras.layers.Concatenate()([x_end, x_end_2])
+    
+  x_end = tf.keras.layers.Flatten()(x_end)
+  x_end = tf.keras.layers.Dense(128, activation = "relu")(x_end)
+  x_end = tf.keras.layers.Dense(5*x.shape[2], activation = "relu")(x_end)
+  x_end = tf.keras.layers.Reshape((5,x.shape[2]))(x_end)
+    
+  x_end_2 = tf.keras.layers.GRU(4, return_sequences = True)(x_end)
+  x_end = tf.keras.layers.Concatenate()([x_end, x_end_2])
+  x_end = tf.keras.layers.Dense(x.shape[2], activation = "relu")(x_end)
+    
+    
+  x_end = TransformerBlock(x.shape[2], 4, 128)(x_end,x_end)
+  x_end = TransformerBlock(x.shape[2], 4, 128)(x_end,x)
+  x_end = TransformerBlock(x.shape[2], 4, 128)(x_end,x_end)
+  x_end = TransformerBlock(x.shape[2], 4, 128)(x_end,x)
+
+  x = tf.keras.layers.Flatten()(x_end)
 
   x = tf.keras.layers.Concatenate()([inputs_pos, x])
 
