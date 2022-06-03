@@ -21,7 +21,7 @@ warmup_parallel = 32
 warmup_steps = 5000
 
 batch_size = 64
-gamma = 0.95
+gamma = 0.99
 memory_size = 3000000
 lr  = 0.00025
 seq_len = 600
