@@ -22,15 +22,15 @@ warmup_steps = 5000
 
 batch_size = 32
 gamma = 0.99
-memory_size = 3000000
+memory_size = 1000000
 lr  = 0.0005
 seq_len = 600
 
 soft_reward_inc = 1.05
 comission = 10/100000
 
-resume = True
-#resume = False
+#resume = True
+resume = False
 
 def sample_to_x(sample):
         
