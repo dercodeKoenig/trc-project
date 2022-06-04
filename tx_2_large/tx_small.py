@@ -24,7 +24,7 @@ batch_size = 64
 gamma = 0.99
 memory_size = 3000000
 lr  = 0.00025
-seq_len = 600
+seq_len = 550
 
 soft_reward_inc = 1.05
 comission = 10/100000
@@ -557,6 +557,10 @@ with strategy.scope():
   x = tf.keras.layers.LayerNormalization()(x)
 
   x = Positions(seq_len, x.shape[-1])(x)
+  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
+  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
+  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
+  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
   x = TransformerBlock(x.shape[2], 8, 256)(x,x)
   x = TransformerBlock(x.shape[2], 8, 256)(x,x)
 
