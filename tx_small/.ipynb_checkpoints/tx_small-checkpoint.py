@@ -611,8 +611,8 @@ agent = DQNAgent(
     gamma=gamma,
     optimizer = opt,
     batch_size = batch_size, 
-    target_model_sync = 1000,
-    exploration = 0.02,
+    target_model_sync = 200,
+    exploration = 0.005,
     name=log_folder+name+".h5")
 
 if resume:
