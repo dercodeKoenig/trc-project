@@ -359,6 +359,7 @@ class DQNAgent:
                         #file.write(str(loss))
                         #file.write("\n")
             file.write(str(np.mean(self.losses)))
+            file.write("\n")
             file.close()
 
             file = open(log_folder+"logs/qv_log.txt", "a")  
@@ -366,6 +367,7 @@ class DQNAgent:
                         #file.write(str(qv))
                         #file.write("\n")
             file.write(str(np.mean(self.q_v)))
+            file.write("\n")
             file.close()
 
             file = open(log_folder+"logs/rewards_log.txt", "a")  
@@ -374,6 +376,7 @@ class DQNAgent:
                         #file.write("\n")
                     
             file.write(str(np.mean(self.total_rewards)))
+            file.write("\n")
             file.close()
             
     
