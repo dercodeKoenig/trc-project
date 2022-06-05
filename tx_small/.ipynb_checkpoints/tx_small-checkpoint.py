@@ -29,8 +29,8 @@ seq_len = 600
 soft_reward_inc = 1.05
 comission = 10/100000
 
-#resume = True
-resume = False
+resume = True
+#resume = False
 
 def sample_to_x(sample):
         
@@ -355,21 +355,25 @@ class DQNAgent:
         def save_current_run():
             self.save_weights()
             file = open(log_folder+"logs/loss_log.txt", "a")  
-            for loss in self.losses:
-                        file.write(str(loss))
-                        file.write("\n")
+            #for loss in self.losses:
+                        #file.write(str(loss))
+                        #file.write("\n")
+            file.write(str(np.mean(self.losses)))
             file.close()
 
             file = open(log_folder+"logs/qv_log.txt", "a")  
-            for qv in self.q_v:
-                        file.write(str(qv))
-                        file.write("\n")
+            #for qv in self.q_v:
+                        #file.write(str(qv))
+                        #file.write("\n")
+            file.write(str(np.mean(self.q_v)))
             file.close()
 
             file = open(log_folder+"logs/rewards_log.txt", "a")  
-            for total_reward in self.total_rewards:
-                        file.write(str(total_reward))
-                        file.write("\n")
+            #for total_reward in self.total_rewards:
+                        #file.write(str(total_reward))
+                        #file.write("\n")
+                    
+            file.write(str(np.mean(self.total_rewards)))
             file.close()
             
     
@@ -381,7 +385,7 @@ class DQNAgent:
         try:
             for i in range(num_steps):
                 if i % log_interval == 0:
-                    progbar = tf.keras.utils.Progbar(log_interval, interval=0.05, stateful_metrics = ["reward sum", "t", "l/s"])
+                    #progbar = tf.keras.utils.Progbar(log_interval, interval=0.05, stateful_metrics = ["reward sum", "t", "l/s"])
                     self.longs = 0
                     self.shorts = 0
 
@@ -429,14 +433,20 @@ class DQNAgent:
 
                 if (i+1) % log_interval == 0:
                     save_current_run()
+                    print("l:", np.mean(self.losses[-train_steps_per_step:]))
+                    print("q:", np.mean(self.q_v[-train_steps_per_step:]))
+                    print("r:", np.mean(reward))
+                    print("reward sum", current_episode_reward_sum)
+                    print("l/s", (self.longs - self.shorts) / (1+self.longs+self.shorts))
+                    print("t", np.mean(times))
 
-                progbar.update(i%log_interval+1, values = 
-                               [("loss", np.mean(self.losses[-train_steps_per_step:])),
-                                ("mean q", np.mean(self.q_v[-train_steps_per_step:])),
-                                ("rewards", np.mean(reward)),
-                                ("reward sum", current_episode_reward_sum),
-                                ("l/s", (self.longs - self.shorts) / (1+self.longs+self.shorts)),
-                                ("t", np.mean(times))])
+                #progbar.update(i%log_interval+1, values = 
+                               #[("loss", np.mean(self.losses[-train_steps_per_step:])),
+                                #("mean q", np.mean(self.q_v[-train_steps_per_step:])),
+                                #("rewards", np.mean(reward)),
+                                #("reward sum", current_episode_reward_sum),
+                                #("l/s", (self.longs - self.shorts) / (1+self.longs+self.shorts)),
+                                #("t", np.mean(times))])
         
         except KeyboardInterrupt:
             print("\n\nbreak!")
