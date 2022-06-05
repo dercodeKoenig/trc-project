@@ -1,0 +1,120 @@
+2022-06-05 00:30:33.516942: I tensorflow/core/tpu/tpu_api_dlsym_initializer.cc:116] Libtpu path is: libtpu.so
+Missing key: 'TWIST' in 'tpu-env' (yaml) instance metadata.
+2022-06-05 00:30:46.709568: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-06-05 00:30:50.650060: I tensorflow/compiler/xla/service/service.cc:170] XLA service 0x5923980 initialized for platform TPU (this does not guarantee that XLA will be used). Devices:
+2022-06-05 00:30:50.650105: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (0): TPU, 2a886c8
+2022-06-05 00:30:50.650113: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (1): TPU, 2a886c8
+2022-06-05 00:30:50.650119: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (2): TPU, 2a886c8
+2022-06-05 00:30:50.650125: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (3): TPU, 2a886c8
+2022-06-05 00:30:50.650130: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (4): TPU, 2a886c8
+2022-06-05 00:30:50.650136: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (5): TPU, 2a886c8
+2022-06-05 00:30:50.650142: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (6): TPU, 2a886c8
+2022-06-05 00:30:50.650147: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (7): TPU, 2a886c8
+WARNING:absl:`tf.distribute.experimental.TPUStrategy` is deprecated, please use  the non experimental symbol `tf.distribute.TPUStrategy` instead.
+2022-06-05 00:30:57.695680: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:263] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+2022-06-05 00:30:58.881833: I tensorflow/compiler/jit/xla_compilation_cache.cc:478] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+2022-06-05 00:30:58.945488: W tensorflow/compiler/tf2xla/kernels/random_ops.cc:57] Warning: Using tf.random.uniform with XLA compilation will ignore seeds; consider using tf.random.stateless_uniform instead if reproducible behavior is desired. RandomUniform
+Model: "model"
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to                     
+==================================================================================================
+ input_1 (InputLayer)           [(None, 550, 6)]     0           []                               
+                                                                                                  
+ dense (Dense)                  (None, 550, 16)      112         ['input_1[0][0]']                
+                                                                                                  
+ dense_1 (Dense)                (None, 550, 16)      272         ['dense[0][0]']                  
+                                                                                                  
+ conv1d (Conv1D)                (None, 550, 64)      3136        ['dense_1[0][0]']                
+                                                                                                  
+ concatenate (Concatenate)      (None, 550, 80)      0           ['conv1d[0][0]',                 
+                                                                  'dense_1[0][0]']                
+                                                                                                  
+ dense_2 (Dense)                (None, 550, 32)      2592        ['concatenate[0][0]']            
+                                                                                                  
+ conv1d_1 (Conv1D)              (None, 550, 512)     344576      ['dense_2[0][0]']                
+                                                                                                  
+ concatenate_1 (Concatenate)    (None, 550, 544)     0           ['conv1d_1[0][0]',               
+                                                                  'dense_2[0][0]']                
+                                                                                                  
+ dense_3 (Dense)                (None, 550, 512)     279040      ['concatenate_1[0][0]']          
+                                                                                                  
+ dense_4 (Dense)                (None, 550, 256)     131328      ['dense_3[0][0]']                
+                                                                                                  
+ layer_normalization (LayerNorm  (None, 550, 256)    512         ['dense_4[0][0]']                
+ alization)                                                                                       
+                                                                                                  
+ positions (Positions)          (None, 550, 256)     0           ['layer_normalization[0][0]']    
+                                                                                                  
+ transformer_block (Transformer  (None, 550, 256)    2236160     ['positions[0][0]',              
+ Block)                                                           'positions[0][0]']              
+                                                                                                  
+ transformer_block_1 (Transform  (None, 550, 256)    2236160     ['transformer_block[0][0]',      
+ erBlock)                                                         'transformer_block[0][0]']      
+                                                                                                  
+ transformer_block_2 (Transform  (None, 550, 256)    2236160     ['transformer_block_1[0][0]',    
+ erBlock)                                                         'transformer_block_1[0][0]']    
+                                                                                                  
+ transformer_block_3 (Transform  (None, 550, 256)    2236160     ['transformer_block_2[0][0]',    
+ erBlock)                                                         'transformer_block_2[0][0]']    
+                                                                                                  
+ transformer_block_4 (Transform  (None, 550, 256)    2236160     ['transformer_block_3[0][0]',    
+ erBlock)                                                         'transformer_block_3[0][0]']    
+                                                                                                  
+ transformer_block_5 (Transform  (None, 550, 256)    2236160     ['transformer_block_4[0][0]',    
+ erBlock)                                                         'transformer_block_4[0][0]']    
+                                                                                                  
+ lambda (Lambda)                (None, 256)          0           ['transformer_block_5[0][0]']    
+                                                                                                  
+ reshape (Reshape)              (None, 1, 256)       0           ['lambda[0][0]']                 
+                                                                                                  
+ transformer_block_6 (Transform  (None, 1, 256)      2236160     ['reshape[0][0]',                
+ erBlock)                                                         'transformer_block_5[0][0]']    
+                                                                                                  
+ input_2 (InputLayer)           [(None, 2)]          0           []                               
+                                                                                                  
+ flatten (Flatten)              (None, 256)          0           ['transformer_block_6[0][0]']    
+                                                                                                  
+ concatenate_2 (Concatenate)    (None, 258)          0           ['input_2[0][0]',                
+                                                                  'flatten[0][0]']                
+                                                                                                  
+ dense_19 (Dense)               (None, 512)          132608      ['concatenate_2[0][0]']          
+                                                                                                  
+ leaky_re_lu (LeakyReLU)        (None, 512)          0           ['dense_19[0][0]']               
+                                                                                                  
+ dense_20 (Dense)               (None, 512)          262656      ['leaky_re_lu[0][0]']            
+                                                                                                  
+ leaky_re_lu_1 (LeakyReLU)      (None, 512)          0           ['dense_20[0][0]']               
+                                                                                                  
+ dense_21 (Dense)               (None, 512)          262656      ['leaky_re_lu_1[0][0]']          
+                                                                                                  
+ leaky_re_lu_2 (LeakyReLU)      (None, 512)          0           ['dense_21[0][0]']               
+                                                                                                  
+ dense_22 (Dense)               (None, 3)            1536        ['leaky_re_lu_2[0][0]']          
+                                                                                                  
+==================================================================================================
+Total params: 17,074,144
+Trainable params: 17,074,144
+Non-trainable params: 0
+__________________________________________________________________________________________________
+2022-06-05 00:32:28.010815: I tensorflow/core/tpu/graph_rewrite/encapsulate_tpu_computations_pass.cc:254] Subgraph fingerprint:15771250832530883633
+2022-06-05 00:32:28.116843: E tensorflow/core/grappler/optimizers/meta_optimizer.cc:903] model_pruner failed: INVALID_ARGUMENT: Graph does not contain terminal node StatefulPartitionedCall.
+2022-06-05 00:32:28.350018: E tensorflow/core/grappler/optimizers/meta_optimizer.cc:903] model_pruner failed: INVALID_ARGUMENT: Graph does not contain terminal node StatefulPartitionedCall.
+2022-06-05 00:32:28.441131: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:435] TPU host compilation cache miss: cache_key(17814587943519649896), session_name()
+2022-06-05 00:32:32.490944: I tensorflow/core/tpu/kernels/tpu_compile_op_common.cc:193] Compilation of 17814587943519649896 with session name  took 4.049691742s and succeeded
+2022-06-05 00:32:32.503727: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:468] TPU host compilation cache: compilation complete for cache_key(17814587943519649896), session_name(), subgraph_key(std::string(property.function_name) = "cluster_tpu_function_15771250832530883633", property.function_library_fingerprint = 17164290007564278417, property.mlir_module_fingerprint = 0, property.num_replicas = 8, topology.chip_bounds().x = 2, topology.chip_bounds().y = 2, topology.chip_bounds().z = 1, topology.wrap().x = false, topology.wrap().y = false, topology.wrap().z = false, topology.MissingChipCount() = 0, std::string(property.shapes_prefix) = "", property.guaranteed_constants_size = 0, embedding_partitions_fingerprint = "1688352644216761960")
+2022-06-05 00:32:32.503776: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:534] After adding entry for key 17814587943519649896 with session_name  cache is 1 entries (21981203 bytes),  marked for eviction 0 entries (0 bytes).
+2022-06-05 00:39:50.620191: I tensorflow/core/tpu/graph_rewrite/encapsulate_tpu_computations_pass.cc:254] Subgraph fingerprint:728109392834929342
+2022-06-05 00:39:50.681336: E tensorflow/core/grappler/optimizers/meta_optimizer.cc:903] model_pruner failed: INVALID_ARGUMENT: Graph does not contain terminal node StatefulPartitionedCall.
+2022-06-05 00:39:50.753859: E tensorflow/core/grappler/optimizers/meta_optimizer.cc:903] model_pruner failed: INVALID_ARGUMENT: Graph does not contain terminal node StatefulPartitionedCall.
+2022-06-05 00:39:50.865949: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:435] TPU host compilation cache miss: cache_key(1531064676901219231), session_name()
+2022-06-05 00:39:53.464453: I tensorflow/core/tpu/kernels/tpu_compile_op_common.cc:193] Compilation of 1531064676901219231 with session name  took 2.598414523s and succeeded
+2022-06-05 00:39:53.473741: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:468] TPU host compilation cache: compilation complete for cache_key(1531064676901219231), session_name(), subgraph_key(std::string(property.function_name) = "cluster_tpu_function_728109392834929342", property.function_library_fingerprint = 1992967191637264086, property.mlir_module_fingerprint = 0, property.num_replicas = 8, topology.chip_bounds().x = 2, topology.chip_bounds().y = 2, topology.chip_bounds().z = 1, topology.wrap().x = false, topology.wrap().y = false, topology.wrap().z = false, topology.MissingChipCount() = 0, std::string(property.shapes_prefix) = "", property.guaranteed_constants_size = 0, embedding_partitions_fingerprint = "1688352644216761960")
+2022-06-05 00:39:53.473791: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:534] After adding entry for key 1531064676901219231 with session_name  cache is 2 entries (42192802 bytes),  marked for eviction 0 entries (0 bytes).
+2022-06-05 00:40:09.454145: I tensorflow/core/tpu/graph_rewrite/encapsulate_tpu_computations_pass.cc:254] Subgraph fingerprint:16554260356171593013
+2022-06-05 00:40:10.038428: E tensorflow/core/grappler/optimizers/meta_optimizer.cc:903] model_pruner failed: INVALID_ARGUMENT: Graph does not contain terminal node StatefulPartitionedCall.
+2022-06-05 00:40:10.577092: E tensorflow/core/grappler/optimizers/meta_optimizer.cc:903] model_pruner failed: INVALID_ARGUMENT: Graph does not contain terminal node StatefulPartitionedCall.
+2022-06-05 00:40:11.356696: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:435] TPU host compilation cache miss: cache_key(10176242396816784931), session_name()
+2022-06-05 00:40:35.490708: I tensorflow/core/tpu/kernels/tpu_compile_op_common.cc:193] Compilation of 10176242396816784931 with session name  took 24.133909058s and succeeded
+2022-06-05 00:40:35.558880: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:468] TPU host compilation cache: compilation complete for cache_key(10176242396816784931), session_name(), subgraph_key(std::string(property.function_name) = "cluster_tpu_function_16554260356171593013", property.function_library_fingerprint = 1051318372249901672, property.mlir_module_fingerprint = 0, property.num_replicas = 8, topology.chip_bounds().x = 2, topology.chip_bounds().y = 2, topology.chip_bounds().z = 1, topology.wrap().x = false, topology.wrap().y = false, topology.wrap().z = false, topology.MissingChipCount() = 0, std::string(property.shapes_prefix) = "", property.guaranteed_constants_size = 0, embedding_partitions_fingerprint = "1688352644216761960")
+2022-06-05 00:40:35.558953: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:534] After adding entry for key 10176242396816784931 with session_name  cache is 3 entries (218683320 bytes),  marked for eviction 0 entries (0 bytes).
