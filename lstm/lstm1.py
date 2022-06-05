@@ -436,7 +436,6 @@ class DQNAgent:
 
 
                 if (i+1) % log_interval == 0:
-                    save_current_run()
                     print("-----------")
                     print("l:", np.mean(self.losses))
                     print("q:", np.mean(self.q_v))
@@ -444,6 +443,7 @@ class DQNAgent:
                     print("l/s", (self.longs - self.shorts) / (1+self.longs+self.shorts))
                     print("t", np.mean(times))
                     print("-----------")
+                    save_current_run()
 
                 #progbar.update(i%log_interval+1, values = 
                                #[("loss", np.mean(self.losses[-train_steps_per_step:])),
