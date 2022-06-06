@@ -20,6 +20,8 @@ training_parallel = 16
 warmup_parallel = 32
 warmup_steps = 5000
 
+
+loss_prio_sample_mult = 32
 batch_size = 64
 gamma = 0.95
 memory_size = 3000000
@@ -283,7 +285,7 @@ class DQNAgent:
 
         
     def observe_sasrt(self, state, action, next_state, reward, terminal):
-        self.memory.append([state, action, reward, 1-int(terminal), next_state])
+        self.memory.append([state, action, reward, 1-int(terminal), next_state, 1])
         
     @tf.function(jit_compile = True)
     def get_target_q(self, next_states, rewards, terminals):
@@ -291,24 +293,30 @@ class DQNAgent:
         q_batch = tf.math.reduce_max(estimated_q_values_next, axis=1)
         target_q_values = q_batch * self.gamma * terminals + rewards
         return target_q_values
-    
+
         
     @tf.function(jit_compile = False)
-    def tstep(self, states, next_states, rewards, terminals, masks):
+    def tstep(self, states, next_states, rewards, terminals, masks, idx):
         target_q_values = self.get_target_q(next_states, rewards, terminals)
         
         with tf.GradientTape() as t:
             estimated_q_values = tf.math.reduce_sum(self.model(states, training=True) * masks, axis=1)
-            loss = tf.keras.losses.mean_absolute_error(target_q_values, estimated_q_values)
+            loss_e = tf.math.square(target_q_values - estimated_q_values)
+            loss = tf.reduce_mean(loss_e)
+        
         
         gradient = t.gradient(loss, self.model.trainable_variables)
         self.optimizer.apply_gradients(zip(gradient, self.model.trainable_variables))
         
-        return loss, tf.reduce_mean(estimated_q_values)
+        return loss, tf.reduce_mean(estimated_q_values), loss_e, tf.convert_to_tensor(idx)
     
     
     def data_get_func(self, _n):
-        sarts_batch = random.sample(self.memory, self.batch_size)
+        idx = np.random.randint(0, len(self.memory), self.batch_size*loss_prio_sample_mult)
+        sarts_batch = [self.memory[i] for i in idx]
+        sorted_batch_idx = sorted(zip(sarts_batch, idx), key=lambda x:x[0][-1])[0:self.batch_size]
+        sarts_batch = [i[0] for i in sorted_batch_idx]
+        sorted_idx = [i[1] for i in sorted_batch_idx]
         
         states = [x[0] for x in sarts_batch]
         states_1 = np.array([x[0] for x in states], dtype="float32")
@@ -323,16 +331,26 @@ class DQNAgent:
         next_states_2 = np.array([x[1] for x in next_states], dtype="float32")
         
         masks = self.m1[actions]
-
-        return [states_1, states_2], [next_states_1, next_states_2], rewards, terminals, masks
+        return [states_1, states_2], [next_states_1, next_states_2], rewards, terminals, masks, sorted_idx
 
     def update_parameters(self):
         self.total_steps_trained+=1
         if self.total_steps_trained % self.target_model_sync == 0:
             self.copy_weights()
 
+           
         distributed_values = (strategy.experimental_distribute_values_from_function(self.data_get_func))
-        return  strategy.reduce(tf.distribute.ReduceOp.MEAN, strategy.run(self.tstep, args = (distributed_values)), axis = None)
+        result= strategy.run(self.tstep, args = (distributed_values))
+    
+        map_loss = [x.numpy() for x in result[2].values]
+        map_idx = [x.numpy() for x in result[3].values]
+
+        for ls, ids in zip(map_loss,map_idx):
+            for l, i in zip(ls,ids):
+                self.memory[i][-1] = l
+
+        
+        return  strategy.reduce(tf.distribute.ReduceOp.MEAN, result[0:2], axis = None)
     
     
     def train(self, num_steps, envs, log_interval = 1000, warmup = 0, train_steps_per_step = 1):
