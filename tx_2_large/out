@@ -1,21 +1,21 @@
 nohup: ignoring input
-2022-06-05 23:05:45.157075: I tensorflow/core/tpu/tpu_api_dlsym_initializer.cc:116] Libtpu path is: libtpu.so
+2022-06-06 12:09:32.960922: I tensorflow/core/tpu/tpu_api_dlsym_initializer.cc:116] Libtpu path is: libtpu.so
 Missing key: 'TWIST' in 'tpu-env' (yaml) instance metadata.
-2022-06-05 23:05:46.837775: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
+2022-06-06 12:09:34.636521: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2022-06-05 23:05:50.545614: I tensorflow/compiler/xla/service/service.cc:170] XLA service 0x544b980 initialized for platform TPU (this does not guarantee that XLA will be used). Devices:
-2022-06-05 23:05:50.545668: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (0): TPU, 2a886c8
-2022-06-05 23:05:50.545678: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (1): TPU, 2a886c8
-2022-06-05 23:05:50.545685: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (2): TPU, 2a886c8
-2022-06-05 23:05:50.545692: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (3): TPU, 2a886c8
-2022-06-05 23:05:50.545699: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (4): TPU, 2a886c8
-2022-06-05 23:05:50.545706: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (5): TPU, 2a886c8
-2022-06-05 23:05:50.545712: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (6): TPU, 2a886c8
-2022-06-05 23:05:50.545720: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (7): TPU, 2a886c8
+2022-06-06 12:09:38.143182: I tensorflow/compiler/xla/service/service.cc:170] XLA service 0x6a9d980 initialized for platform TPU (this does not guarantee that XLA will be used). Devices:
+2022-06-06 12:09:38.143235: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (0): TPU, 2a886c8
+2022-06-06 12:09:38.143244: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (1): TPU, 2a886c8
+2022-06-06 12:09:38.143251: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (2): TPU, 2a886c8
+2022-06-06 12:09:38.143257: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (3): TPU, 2a886c8
+2022-06-06 12:09:38.143264: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (4): TPU, 2a886c8
+2022-06-06 12:09:38.143271: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (5): TPU, 2a886c8
+2022-06-06 12:09:38.143277: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (6): TPU, 2a886c8
+2022-06-06 12:09:38.143283: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (7): TPU, 2a886c8
 WARNING:absl:`tf.distribute.experimental.TPUStrategy` is deprecated, please use  the non experimental symbol `tf.distribute.TPUStrategy` instead.
-2022-06-05 23:05:57.544795: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:263] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
-2022-06-05 23:05:57.568563: I tensorflow/compiler/jit/xla_compilation_cache.cc:478] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
-2022-06-05 23:05:57.583857: W tensorflow/compiler/tf2xla/kernels/random_ops.cc:57] Warning: Using tf.random.uniform with XLA compilation will ignore seeds; consider using tf.random.stateless_uniform instead if reproducible behavior is desired. RandomUniform
+2022-06-06 12:09:45.753548: I tensorflow/compiler/mlir/tensorflow/utils/dump_mlir_util.cc:263] disabling MLIR crash reproducer, set env var `MLIR_CRASH_REPRODUCER_DIRECTORY` to enable.
+2022-06-06 12:09:45.774610: I tensorflow/compiler/jit/xla_compilation_cache.cc:478] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+2022-06-06 12:09:45.789573: W tensorflow/compiler/tf2xla/kernels/random_ops.cc:57] Warning: Using tf.random.uniform with XLA compilation will ignore seeds; consider using tf.random.stateless_uniform instead if reproducible behavior is desired. RandomUniform
 Model: "model"
 __________________________________________________________________________________________________
  Layer (type)                   Output Shape         Param #     Connected to                     
@@ -100,533 +100,78 @@ Non-trainable params: 0
 __________________________________________________________________________________________________
 loading weights...
 warmup...
-2022-06-05 23:07:21.636860: I tensorflow/core/tpu/graph_rewrite/encapsulate_tpu_computations_pass.cc:254] Subgraph fingerprint:15771250832530883633
-2022-06-05 23:07:21.691843: E tensorflow/core/grappler/optimizers/meta_optimizer.cc:903] model_pruner failed: INVALID_ARGUMENT: Graph does not contain terminal node StatefulPartitionedCall.
-2022-06-05 23:07:21.755428: E tensorflow/core/grappler/optimizers/meta_optimizer.cc:903] model_pruner failed: INVALID_ARGUMENT: Graph does not contain terminal node StatefulPartitionedCall.
-2022-06-05 23:07:21.854439: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:435] TPU host compilation cache miss: cache_key(17814587943519649896), session_name()
-2022-06-05 23:07:24.766177: I tensorflow/core/tpu/kernels/tpu_compile_op_common.cc:193] Compilation of 17814587943519649896 with session name  took 2.911594872s and succeeded
-2022-06-05 23:07:24.778958: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:468] TPU host compilation cache: compilation complete for cache_key(17814587943519649896), session_name(), subgraph_key(std::string(property.function_name) = "cluster_tpu_function_15771250832530883633", property.function_library_fingerprint = 17164290007564278417, property.mlir_module_fingerprint = 0, property.num_replicas = 8, topology.chip_bounds().x = 2, topology.chip_bounds().y = 2, topology.chip_bounds().z = 1, topology.wrap().x = false, topology.wrap().y = false, topology.wrap().z = false, topology.MissingChipCount() = 0, std::string(property.shapes_prefix) = "", property.guaranteed_constants_size = 0, embedding_partitions_fingerprint = "1688352644216761960")
-2022-06-05 23:07:24.779003: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:534] After adding entry for key 17814587943519649896 with session_name  cache is 1 entries (21981203 bytes),  marked for eviction 0 entries (0 bytes).
+2022-06-06 12:11:10.118704: I tensorflow/core/tpu/graph_rewrite/encapsulate_tpu_computations_pass.cc:254] Subgraph fingerprint:15771250832530883633
+2022-06-06 12:11:10.173014: E tensorflow/core/grappler/optimizers/meta_optimizer.cc:903] model_pruner failed: INVALID_ARGUMENT: Graph does not contain terminal node StatefulPartitionedCall.
+2022-06-06 12:11:10.235467: E tensorflow/core/grappler/optimizers/meta_optimizer.cc:903] model_pruner failed: INVALID_ARGUMENT: Graph does not contain terminal node StatefulPartitionedCall.
+2022-06-06 12:11:10.326765: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:435] TPU host compilation cache miss: cache_key(17814587943519649896), session_name()
+2022-06-06 12:11:13.006675: I tensorflow/core/tpu/kernels/tpu_compile_op_common.cc:193] Compilation of 17814587943519649896 with session name  took 2.67981661s and succeeded
+2022-06-06 12:11:13.018135: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:468] TPU host compilation cache: compilation complete for cache_key(17814587943519649896), session_name(), subgraph_key(std::string(property.function_name) = "cluster_tpu_function_15771250832530883633", property.function_library_fingerprint = 17164290007564278417, property.mlir_module_fingerprint = 0, property.num_replicas = 8, topology.chip_bounds().x = 2, topology.chip_bounds().y = 2, topology.chip_bounds().z = 1, topology.wrap().x = false, topology.wrap().y = false, topology.wrap().z = false, topology.MissingChipCount() = 0, std::string(property.shapes_prefix) = "", property.guaranteed_constants_size = 0, embedding_partitions_fingerprint = "1688352644216761960")
+2022-06-06 12:11:13.018195: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:534] After adding entry for key 17814587943519649896 with session_name  cache is 1 entries (21981203 bytes),  marked for eviction 0 entries (0 bytes).
 -----------
 l: 0.0
 q: 0.0
-reward sum 54.115421790638656
-l/s -0.10089561004257819
-t 75.70939064025879
+reward sum -42.28523757468622
+l/s 0.312484840084549
+t 74.88675117492676
 -----------
 /usr/local/lib/python3.8/dist-packages/numpy/core/fromnumeric.py:3474: RuntimeWarning: Mean of empty slice.
   return _methods._mean(a, axis=axis, dtype=dtype,
 /usr/local/lib/python3.8/dist-packages/numpy/core/_methods.py:189: RuntimeWarning: invalid value encountered in double_scalars
   ret = ret.dtype.type(ret / rcount)
 training...
-2022-06-05 23:14:44.369247: I tensorflow/core/tpu/graph_rewrite/encapsulate_tpu_computations_pass.cc:254] Subgraph fingerprint:15848797752429446772
-2022-06-05 23:14:44.430843: E tensorflow/core/grappler/optimizers/meta_optimizer.cc:903] model_pruner failed: INVALID_ARGUMENT: Graph does not contain terminal node StatefulPartitionedCall.
-2022-06-05 23:14:44.507479: E tensorflow/core/grappler/optimizers/meta_optimizer.cc:903] model_pruner failed: INVALID_ARGUMENT: Graph does not contain terminal node StatefulPartitionedCall.
-2022-06-05 23:14:44.622116: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:435] TPU host compilation cache miss: cache_key(7874181843877730540), session_name()
-2022-06-05 23:14:47.360604: I tensorflow/core/tpu/kernels/tpu_compile_op_common.cc:193] Compilation of 7874181843877730540 with session name  took 2.738378038s and succeeded
-2022-06-05 23:14:47.370549: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:468] TPU host compilation cache: compilation complete for cache_key(7874181843877730540), session_name(), subgraph_key(std::string(property.function_name) = "cluster_tpu_function_15848797752429446772", property.function_library_fingerprint = 6483404700698459522, property.mlir_module_fingerprint = 0, property.num_replicas = 8, topology.chip_bounds().x = 2, topology.chip_bounds().y = 2, topology.chip_bounds().z = 1, topology.wrap().x = false, topology.wrap().y = false, topology.wrap().z = false, topology.MissingChipCount() = 0, std::string(property.shapes_prefix) = "", property.guaranteed_constants_size = 0, embedding_partitions_fingerprint = "1688352644216761960")
-2022-06-05 23:14:47.370592: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:534] After adding entry for key 7874181843877730540 with session_name  cache is 2 entries (42202370 bytes),  marked for eviction 0 entries (0 bytes).
-2022-06-05 23:14:58.538838: I tensorflow/core/tpu/graph_rewrite/encapsulate_tpu_computations_pass.cc:254] Subgraph fingerprint:15792794098803310122
-2022-06-05 23:14:59.131834: E tensorflow/core/grappler/optimizers/meta_optimizer.cc:903] model_pruner failed: INVALID_ARGUMENT: Graph does not contain terminal node StatefulPartitionedCall.
-2022-06-05 23:14:59.686110: E tensorflow/core/grappler/optimizers/meta_optimizer.cc:903] model_pruner failed: INVALID_ARGUMENT: Graph does not contain terminal node StatefulPartitionedCall.
-2022-06-05 23:15:00.486320: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:435] TPU host compilation cache miss: cache_key(10548778693356933535), session_name()
-2022-06-05 23:15:23.264122: I tensorflow/core/tpu/kernels/tpu_compile_op_common.cc:193] Compilation of 10548778693356933535 with session name  took 22.777669418s and succeeded
-2022-06-05 23:15:23.322133: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:468] TPU host compilation cache: compilation complete for cache_key(10548778693356933535), session_name(), subgraph_key(std::string(property.function_name) = "cluster_tpu_function_15792794098803310122", property.function_library_fingerprint = 13127177381358832336, property.mlir_module_fingerprint = 0, property.num_replicas = 8, topology.chip_bounds().x = 2, topology.chip_bounds().y = 2, topology.chip_bounds().z = 1, topology.wrap().x = false, topology.wrap().y = false, topology.wrap().z = false, topology.MissingChipCount() = 0, std::string(property.shapes_prefix) = "", property.guaranteed_constants_size = 0, embedding_partitions_fingerprint = "1688352644216761960")
-2022-06-05 23:15:23.322202: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:534] After adding entry for key 10548778693356933535 with session_name  cache is 3 entries (218692888 bytes),  marked for eviction 0 entries (0 bytes).
------------
-l: 0.08168930603098125
-q: 0.016344792300718836
-reward sum 24.241396868465348
-l/s 0.05260243632336656
-t 613.7551546096802
------------
------------
-l: 0.08098933050924396
-q: 0.016292731207167427
-reward sum 4.867996227638667
-l/s 0.5180533751962323
-t 616.6839599609375
------------
------------
-l: 0.08138400400624975
-q: 0.017934418472039935
-reward sum -8.519259632206474
-l/s 0.8348231636222309
-t 620.5151796340942
------------
------------
-l: 0.08355085519361091
-q: 0.019390416742822568
-reward sum -25.307191785482292
-l/s 0.8934331797235023
-t 617.4504041671753
------------
------------
-l: 0.08067844635234786
-q: 0.020195155396134583
-reward sum -58.97449719048201
-l/s 0.6018702181921224
-t 622.4901437759399
------------
------------
-l: 0.08409730276068697
-q: 0.016579012730280746
-reward sum -86.99356441594082
-l/s 0.6919588875453446
-t 618.0625200271606
------------
------------
-l: 0.08199276019038482
-q: 0.01414767221966805
-reward sum -83.53756700301574
-l/s 0.621868978805395
-t 619.1527843475342
------------
------------
-l: 0.0813615195021465
-q: 0.014158974586103063
-reward sum -61.745145374504595
-l/s 0.3212646608873024
-t 620.4606771469116
------------
------------
-l: 0.07888752227364393
-q: 0.01355672083454547
-reward sum -84.16429426217555
-l/s 0.8789909341742215
-t 617.5078630447388
------------
------------
-l: 0.07410775481692546
-q: 0.013243971068503243
-reward sum -60.07330013361626
-l/s 0.8686084142394822
-t 621.926999092102
------------
------------
-l: 0.07490280002995685
-q: 0.013432371838890076
-reward sum -115.39440130708198
-l/s 0.49490022172949
-t 616.8144941329956
------------
------------
-l: 0.0761344184639392
-q: 0.011316561443776779
-reward sum -158.42899789873223
-l/s 0.6777663934426229
-t 618.4681415557861
------------
------------
-l: 0.07224643855010504
-q: 0.01023651162240576
-reward sum -130.66109446751227
-l/s 0.9220287660862982
-t 625.3104209899902
------------
------------
-l: 0.07104918965418543
-q: 0.010413663915835775
-reward sum -97.62806673651384
-l/s 0.5917735515258735
-t 624.5839357376099
------------
------------
-l: 0.06915420090191654
-q: 0.011579292466612552
-reward sum -121.44369411692323
-l/s 0.3572216097023153
-t 621.3246822357178
------------
------------
-l: 0.06864752191222169
-q: 0.012950263293967075
-reward sum -135.58824625311857
-l/s -0.03536842105263158
-t 621.3717937469482
------------
------------
-l: 0.0700969216888296
-q: 0.011862843016210895
-reward sum -111.1392127290057
-l/s 0.5210727969348659
-t 622.2702503204346
------------
------------
-l: 0.07077149794875207
-q: 0.012401446509685556
-reward sum -122.21371411023672
-l/s 0.2685735512630015
-t 621.8292713165283
------------
------------
-l: 0.06871290391889753
-q: 0.009233455452585377
-reward sum -75.80186842175479
-l/s 0.8762010347376201
-t 625.2910614013672
------------
------------
-l: 0.06814276396048503
-q: 0.00992900085229367
-reward sum -88.15504053588484
-l/s 0.670076726342711
-t 624.3872165679932
------------
------------
-l: 0.06876791410099764
-q: 0.01212109806137969
-reward sum -78.3671270270685
-l/s 0.3895318253550763
-t 628.7575244903564
------------
------------
-l: 0.06921603242223794
-q: 0.011813542955754125
-reward sum -135.80579633398247
-l/s 0.24496739438616388
-t 630.0370693206787
------------
------------
-l: 0.0669035853089562
-q: 0.01016542812216572
-reward sum -76.07795026903946
-l/s 0.6843575418994413
-t 628.5581827163696
------------
------------
-l: 0.0665849574862958
-q: 0.00902517223065453
-reward sum -50.37614958491727
-l/s 0.6094707520891365
-t 625.5681276321411
------------
------------
-l: 0.06479689692399213
-q: 0.009391112191227872
-reward sum -43.01907847821307
-l/s 0.47361647361647363
-t 631.5006971359253
------------
------------
-l: 0.06270698194004051
-q: 0.009540699714153715
-reward sum -49.476305824386614
-l/s 0.6734597156398104
-t 630.3957462310791
------------
------------
-l: 0.06456881693957911
-q: 0.009532794145030806
-reward sum -33.19426791698089
-l/s 0.5301873698820264
-t 634.272289276123
------------
------------
-l: 0.06256661165485179
-q: 0.009282490470796474
-reward sum -21.964331915262644
-l/s 0.21446895844022576
-t 633.9282989501953
------------
------------
-l: 0.0641907318620817
-q: 0.009404248327887213
-reward sum -42.62797029826269
-l/s 0.6403212172442941
-t 635.5326652526855
------------
------------
-l: 0.0625391368699315
-q: 0.007597804948696043
-reward sum -59.07878828332028
-l/s 0.1977726574500768
-t 638.9013767242432
------------
------------
-l: 0.061945034747619504
-q: 0.007756737501763569
-reward sum -70.88782981965562
-l/s 0.6376360808709176
-t 640.4650688171387
------------
------------
-l: 0.0635936252324359
-q: 0.00906868812519467
-reward sum -61.432677909997665
-l/s 0.6731831704207395
-t 636.1806869506836
------------
------------
-l: 0.06237798441316817
-q: 0.010473815117814218
-reward sum -59.331200669878335
-l/s 0.8645189761694616
-t 637.7119779586792
------------
------------
-l: 0.06346882202949321
-q: 0.011405483172921749
-reward sum -73.57225795651647
-l/s 0.9904474610356964
-t 639.0711545944214
------------
------------
-l: 0.061196080626702155
-q: 0.00984023952415654
-reward sum -67.28660493030921
-l/s 0.532176428054953
-t 636.9999170303345
------------
------------
-l: 0.06162436063504675
-q: 0.009773673802185301
-reward sum -86.45326362894258
-l/s 0.6917057902973396
-t 640.7090425491333
------------
------------
-l: 0.06153360352042939
-q: 0.010465982028333886
-reward sum -74.29979037381796
-l/s 0.5913793103448276
-t 644.3030834197998
------------
------------
-l: 0.060314718211957295
-q: 0.009295920246061157
-reward sum -59.366054181371524
-l/s 0.8352745424292846
-t 643.0096626281738
------------
------------
-l: 0.0591481180799256
-q: 0.00958590351874809
-reward sum -32.64096772461195
-l/s 0.7419590643274854
-t 644.4222450256348
------------
------------
-l: 0.06024470982038519
-q: 0.008566353433801755
-reward sum -27.477800514751486
-l/s 0.11440677966101695
-t 646.4534044265747
------------
------------
-l: 0.05792304164112232
-q: 0.008415804768446833
-reward sum 15.1606241120759
-l/s 0.7112219451371571
-t 647.1460342407227
------------
------------
-l: 0.05772627422401866
-q: 0.008198627007079193
-reward sum 13.403123183429807
-l/s 0.6043329532497149
-t 646.5911388397217
------------
------------
-l: 0.057955565105018376
-q: 0.008239808426595403
-reward sum 23.803365595615745
-l/s -0.1797331109257715
-t 648.0680465698242
------------
------------
-l: 0.055386421535132485
-q: 0.0077106138627865
-reward sum -9.029487080672896
-l/s 0.020187793427230045
-t 651.974606513977
------------
------------
-l: 0.05646218847693665
-q: 0.006660656014524796
-reward sum 7.933698639801302
-l/s 0.31461232604373757
-t 652.9774188995361
------------
------------
-l: 0.05651053887295102
-q: 0.007051309393005199
-reward sum -46.14212265707071
-l/s 0.23554735547355474
-t 651.2943744659424
------------
------------
-l: 0.057774660018896994
-q: 0.006531605062305929
-reward sum -85.657101568019
-l/s 0.7691284098469727
-t 655.3489923477173
------------
------------
-l: 0.057161828697464626
-q: 0.005747963788750197
-reward sum -95.53614812380337
-l/s 0.9818548387096774
-t 653.8785219192505
------------
------------
-l: 0.05626906325331667
-q: 0.007226906243399331
-reward sum -78.5872636813896
-l/s 0.36181640625
-t 661.4763736724854
------------
------------
-l: 0.05523613083560567
-q: 0.007489429768019046
-reward sum -88.16931637344257
-l/s -0.3667749796913079
-t 658.9987993240356
------------
------------
-l: 0.05379986399478818
-q: 0.007712611023063463
-reward sum -57.862090921146475
-l/s 0.9413298565840938
-t 658.5211277008057
------------
------------
-l: 0.05545378757313221
-q: 0.007123677534791541
-reward sum -48.045141335916334
-l/s 0.9507445589919816
-t 663.0705833435059
------------
------------
-l: 0.05542258637911686
-q: 0.007124740032974717
-reward sum -48.72893766290713
-l/s 0.5642978003384095
-t 660.3774309158325
------------
------------
-l: 0.053787529962342026
-q: 0.006629022890929836
-reward sum -42.62820777611087
-l/s 0.6607756504663721
-t 665.4619455337524
------------
------------
-l: 0.05425756336045596
-q: 0.0073381564146690215
-reward sum -33.00593072057531
-l/s -0.33841613379242497
-t 661.5024089813232
------------
------------
-l: 0.05366071693591781
-q: 0.008804068046254008
-reward sum -43.53330598038918
-l/s 0.08927918038785218
-t 662.8640174865723
------------
------------
-l: 0.05489644746720134
-q: 0.011108963008722073
-reward sum -14.728631640421426
-l/s 0.1798469387755102
-t 664.0427350997925
------------
------------
-l: 0.05447597481211746
-q: 0.010134606679087853
-reward sum -23.86451316365975
-l/s 0.725
-t 665.288257598877
------------
------------
-l: 0.05471758452266432
-q: 0.010398439844997207
-reward sum -14.595128950094615
-l/s 0.052120141342756186
-t 666.6453123092651
------------
------------
-l: 0.052813889971189014
-q: 0.010059276030731056
-reward sum -32.48523173835254
-l/s 0.7093235831809872
-t 668.630051612854
------------
------------
-l: 0.05482228112162336
-q: 0.009120111703348404
-reward sum 8.397979268718995
-l/s 0.7494855967078189
-t 672.8603839874268
------------
------------
-l: 0.05360200603657237
-q: 0.007332647807882356
-reward sum 17.095756992799146
-l/s 0.26979166666666665
-t 669.9847936630249
------------
------------
-l: 0.052571794271681245
-q: 0.007912329932460542
-reward sum 54.308750518759354
-l/s 0.6452894438138479
-t 677.7081727981567
------------
------------
-l: 0.05283994071079495
-q: 0.007846803013718318
-reward sum 69.6526746272838
-l/s 0.43656908063687727
-t 679.0787220001221
------------
------------
-l: 0.053536033537192315
-q: 0.008172391247205235
-reward sum 71.45286813719255
-l/s 0.07225738396624473
-t 672.9804992675781
------------
------------
-l: 0.05322002961614495
-q: 0.008050968656624883
-reward sum 65.7043155886814
-l/s -0.09773299748110831
-t 676.0102987289429
------------
------------
-l: 0.05317513515091651
-q: 0.009000232648924628
-reward sum 72.98912927772109
-l/s 0.15071428571428572
-t 675.4135370254517
------------
------------
-l: 0.05322234262084285
-q: 0.010159754899440224
-reward sum 75.77976226810998
-l/s 0.4951993017166133
-t 679.0540456771851
------------
------------
-l: 0.05266128361576816
-q: 0.010325021887599671
-reward sum 90.95407323905862
-l/s 0.7829139847864248
-t 675.2888679504395
------------
------------
-l: 0.053687227636014676
-q: 0.00871459091402968
-reward sum 29.340162433526288
-l/s 0.21666666666666667
-t 676.1936664581299
------------
------------
-l: 0.05418443131389898
-q: 0.008246330309530267
-reward sum 38.07712839756652
-l/s -0.14409122322045612
-t 679.3874979019165
+2022-06-06 12:18:23.857833: I tensorflow/core/tpu/graph_rewrite/encapsulate_tpu_computations_pass.cc:254] Subgraph fingerprint:2153567165137085689
+2022-06-06 12:18:23.919957: E tensorflow/core/grappler/optimizers/meta_optimizer.cc:903] model_pruner failed: INVALID_ARGUMENT: Graph does not contain terminal node StatefulPartitionedCall.
+2022-06-06 12:18:23.993365: E tensorflow/core/grappler/optimizers/meta_optimizer.cc:903] model_pruner failed: INVALID_ARGUMENT: Graph does not contain terminal node StatefulPartitionedCall.
+2022-06-06 12:18:24.108372: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:435] TPU host compilation cache miss: cache_key(12012248425541383492), session_name()
+2022-06-06 12:18:26.875432: I tensorflow/core/tpu/kernels/tpu_compile_op_common.cc:193] Compilation of 12012248425541383492 with session name  took 2.766933785s and succeeded
+2022-06-06 12:18:26.886391: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:468] TPU host compilation cache: compilation complete for cache_key(12012248425541383492), session_name(), subgraph_key(std::string(property.function_name) = "cluster_tpu_function_2153567165137085689", property.function_library_fingerprint = 18067090780263227863, property.mlir_module_fingerprint = 0, property.num_replicas = 8, topology.chip_bounds().x = 2, topology.chip_bounds().y = 2, topology.chip_bounds().z = 1, topology.wrap().x = false, topology.wrap().y = false, topology.wrap().z = false, topology.MissingChipCount() = 0, std::string(property.shapes_prefix) = "", property.guaranteed_constants_size = 0, embedding_partitions_fingerprint = "1688352644216761960")
+2022-06-06 12:18:26.886431: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:534] After adding entry for key 12012248425541383492 with session_name  cache is 2 entries (42192802 bytes),  marked for eviction 0 entries (0 bytes).
+2022-06-06 12:18:38.775261: I tensorflow/core/tpu/graph_rewrite/encapsulate_tpu_computations_pass.cc:254] Subgraph fingerprint:10226488485732966691
+2022-06-06 12:18:39.404095: E tensorflow/core/grappler/optimizers/meta_optimizer.cc:903] model_pruner failed: INVALID_ARGUMENT: Graph does not contain terminal node StatefulPartitionedCall.
+2022-06-06 12:18:40.051148: E tensorflow/core/grappler/optimizers/meta_optimizer.cc:903] model_pruner failed: INVALID_ARGUMENT: Graph does not contain terminal node StatefulPartitionedCall.
+2022-06-06 12:18:40.961003: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:435] TPU host compilation cache miss: cache_key(13019461219624747816), session_name()
+2022-06-06 12:19:05.146831: I tensorflow/core/tpu/kernels/tpu_compile_op_common.cc:193] Compilation of 13019461219624747816 with session name  took 24.185688908s and succeeded
+2022-06-06 12:19:05.222057: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:468] TPU host compilation cache: compilation complete for cache_key(13019461219624747816), session_name(), subgraph_key(std::string(property.function_name) = "cluster_tpu_function_10226488485732966691", property.function_library_fingerprint = 16181946402515871729, property.mlir_module_fingerprint = 0, property.num_replicas = 8, topology.chip_bounds().x = 2, topology.chip_bounds().y = 2, topology.chip_bounds().z = 1, topology.wrap().x = false, topology.wrap().y = false, topology.wrap().z = false, topology.MissingChipCount() = 0, std::string(property.shapes_prefix) = "", property.guaranteed_constants_size = 0, embedding_partitions_fingerprint = "1688352644216761960")
+2022-06-06 12:19:05.222130: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:534] After adding entry for key 13019461219624747816 with session_name  cache is 3 entries (220666395 bytes),  marked for eviction 0 entries (0 bytes).
+-----------
+l: 0.005173119033158559
+q: 0.0004331273727785856
+reward sum 0.0
+l/s 0.0
+t 776.5564680099487
+-----------
+-----------
+l: 0.002195405562793578
+q: 0.00856183029077624
+reward sum 29.12550783369396
+l/s -0.9773695420660277
+t 795.4169511795044
+-----------
+-----------
+l: 0.0013589848227319905
+q: 0.019429694442497147
+reward sum -39.207728112229226
+l/s -0.9904893177119228
+t 799.5319366455078
+-----------
+-----------
+l: 0.0015200787987303156
+q: 0.015449494042049546
+reward sum -57.52186548559353
+l/s -0.9345023207839093
+t 811.7759704589844
+-----------
+-----------
+l: 0.0012400725315773891
+q: 0.01228851462064495
+reward sum -36.27023008063786
+l/s -0.9010989010989011
+t 815.5349493026733
+-----------
+-----------
+l: 0.0013570024760976803
+q: 0.009264293662086314
+reward sum -67.60622732337147
+l/s -0.8967889908256881
+t 826.3157367706299
 -----------
