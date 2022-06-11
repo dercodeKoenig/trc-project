@@ -1,0 +1,13 @@
+2022-06-11 12:45:26.217311: I tensorflow/core/tpu/tpu_api_dlsym_initializer.cc:116] Libtpu path is: libtpu.so
+Missing key: 'TWIST' in 'tpu-env' (yaml) instance metadata.
+2022-06-11 12:45:27.844095: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2022-06-11 12:45:31.336081: I tensorflow/compiler/xla/service/service.cc:170] XLA service 0x5b2d980 initialized for platform TPU (this does not guarantee that XLA will be used). Devices:
+2022-06-11 12:45:31.336134: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (0): TPU, 2a886c8
+2022-06-11 12:45:31.336144: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (1): TPU, 2a886c8
+2022-06-11 12:45:31.336151: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (2): TPU, 2a886c8
+2022-06-11 12:45:31.336157: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (3): TPU, 2a886c8
+2022-06-11 12:45:31.336164: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (4): TPU, 2a886c8
+2022-06-11 12:45:31.336170: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (5): TPU, 2a886c8
+2022-06-11 12:45:31.336179: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (6): TPU, 2a886c8
+2022-06-11 12:45:31.336185: I tensorflow/compiler/xla/service/service.cc:178]   StreamExecutor device (7): TPU, 2a886c8
