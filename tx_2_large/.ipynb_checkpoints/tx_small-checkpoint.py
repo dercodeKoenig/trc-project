@@ -31,8 +31,8 @@ seq_len = 550
 soft_reward_inc = 1.05
 comission = 10/100000
 
-#resume = True
-resume = False
+resume = True
+#resume = False
 
 def sample_to_x(sample):
         
@@ -267,7 +267,7 @@ class DQNAgent:
         num_inputs = len(current_states)
 
         if random.random() < self.exploration:
-          return tf.random.uniform(shape=[num_inputs], minval=0, maxval=3, dtype=tf.int32)
+          return tf.random.uniform(shape=[num_inputs], minval=0, maxval=self.n_actions, dtype=tf.int32)
 
         assert num_inputs % 8 == 0
         inc = int(num_inputs/8)
