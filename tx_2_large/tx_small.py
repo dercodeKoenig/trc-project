@@ -149,6 +149,7 @@ class environment():
         self.win -= comission * order_value / 2
 
   def step(self, action):
+    action+=1 # disable no position
     
     if action == 0:
         if self.position != 0:
@@ -313,6 +314,8 @@ class DQNAgent:
     
     def data_get_func(self, _n):
         idx = np.random.randint(0, len(self.memory), self.batch_size*loss_prio_sample_mult)
+        for i in idx:
+            self.memory[i][-1]*=1.001
         sarts_batch = [self.memory[i] for i in idx]
         sorted_batch_idx = sorted(zip(sarts_batch, idx), key=lambda x:x[0][-1])[0:self.batch_size]
         sarts_batch = [i[0] for i in sorted_batch_idx]
@@ -486,83 +489,6 @@ strategy = tf.distribute.experimental.TPUStrategy(tpu)
 
 
 
-class TransformerBlock(tf.keras.layers.Layer):
-    embed_dim = 0
-    num_heads = 0
-    ff_dim = 0 
-    rate=0
-    def __init__(self, embed_dim, num_heads, ff_dim, rate=0.1, **kwargs):
-        self.embed_dim = embed_dim
-        self.num_heads = num_heads
-        self.ff_dim = ff_dim
-        self.rate = rate
-
-
-        super(TransformerBlock, self).__init__()
-        self.att = tf.keras.layers.MultiHeadAttention(num_heads=num_heads, key_dim=embed_dim)
-        self.ffn = tf.keras.Sequential(
-            [tf.keras.layers.Dense(ff_dim, activation="relu"), tf.keras.layers.Dense(embed_dim),]
-        )
-        self.layernorm1 = tf.keras.layers.LayerNormalization(epsilon=1e-6)
-        self.layernorm2 = tf.keras.layers.LayerNormalization(epsilon=1e-6)
-        self.dropout1 = tf.keras.layers.Dropout(rate)
-        self.dropout2 = tf.keras.layers.Dropout(rate)
-
-    def get_config(self):
-        cfg = super().get_config()
-        cfg.update()
-        cfg.update({
-            'embed_dim': self.embed_dim,
-            'num_heads': self.num_heads,
-            'ff_dim': self.ff_dim,
-            'rate': self.rate,
-        })
-        return cfg  
-    def call(self, q, k, training = False):
-        attn_output = self.att(q, k)
-        attn_output = self.dropout1(attn_output, training=training)
-        out1 = self.layernorm1(q + attn_output)
-        ffn_output = self.ffn(out1)
-        ffn_output = self.dropout2(ffn_output, training=training)
-        return self.layernorm2(out1 + ffn_output)
-
-    
-def getPositionEncoding(seq_len, d, n=10000):
-    P = np.zeros((seq_len, d))
-    for k in range(seq_len):
-        for i in np.arange(int(d/2)):
-            denominator = np.power(n, 2*i/d)
-            P[k, 2*i] = np.sin(k/denominator)
-            P[k, 2*i+1] = np.cos(k/denominator)
-    return P[::]
-
-class Positions(tf.keras.layers.Layer):
-    P = []
-    d = 0
-    seq_len = 0
-    def __init__(self, seq_len, d, **kwargs):
-        super(Positions, self).__init__()
-        self.seq_len = seq_len
-        self.d = d
-        self.p = getPositionEncoding(seq_len, d)
-        
-
-    def call(self, x):
-        return x + self.p
-
-    def get_config(self):
-        cfg = super().get_config()
-        cfg.update()
-        cfg.update({
-            'p': self.p,
-            'seq_len': self.seq_len,
-            'd': self.d
-        })
-        return cfg  
-
-
-
-
 tf.keras.backend.clear_session()
 
 with strategy.scope():
@@ -572,36 +498,43 @@ with strategy.scope():
 
   x = inputs_1
 
-  x = tf.keras.layers.Dense(16,activation = "relu")(x)
-  x = tf.keras.layers.Dense(16,activation = "relu")(x)
-
   x2 = tf.keras.layers.Conv1D(64, 3,activation="relu", padding="same")(x)
   x = tf.keras.layers.Concatenate()([x2,x])
 
-  x = tf.keras.layers.Dense(32,activation = "relu")(x)
+  x = tf.keras.layers.Dense(32)(x)
+  x = tf.keras.layers.LeakyReLU()(x)
 
-  x2 = tf.keras.layers.Conv1D(512, 21,activation="relu", padding="same")(x)
+  x2 = tf.keras.layers.Conv1D(128, 5,activation="relu", padding="same")(x)
   x = tf.keras.layers.Concatenate()([x2,x])
 
-  x = tf.keras.layers.Dense(512,activation = "relu")(x)
-  x = tf.keras.layers.Dense(256,activation = "relu")(x)
+  x = tf.keras.layers.Dense(64,activation = "relu")(x)
+
+  x2 = tf.keras.layers.Conv1D(128, 5,activation="relu", padding="same")(x)
+  x = tf.keras.layers.Concatenate()([x2,x])
+    
+  x2 = tf.keras.layers.Conv1D(128, 5,activation="relu", padding="same")(x)
+  x = tf.keras.layers.Add()([x2,x])
+  x2 = tf.keras.layers.Conv1D(128, 5,activation="relu", padding="same")(x)
+  x = tf.keras.layers.Add()([x2,x])
+  x2 = tf.keras.layers.Conv1D(128, 5,activation="relu", padding="same")(x)
+  x = tf.keras.layers.Add()([x2,x])
+  x2 = tf.keras.layers.Conv1D(128, 5,activation="relu", padding="same")(x)
+  x = tf.keras.layers.Add()([x2,x])
+  x2 = tf.keras.layers.Conv1D(128, 5,activation="relu", padding="same")(x)
+  x = tf.keras.layers.Add()([x2,x])
   
-  x = tf.keras.layers.LayerNormalization()(x)
-
-  x = Positions(seq_len, x.shape[-1])(x)
-  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
-  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
-  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
-  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
-  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
-  x = TransformerBlock(x.shape[2], 8, 256)(x,x)
-
-  x_end = tf.keras.layers.Lambda(lambda x: x[:,-1])(x)
-  x_end = tf.keras.layers.Reshape((1,x.shape[2]))(x_end)
-  x = TransformerBlock(x.shape[2], 8, 256)(x_end,x)
+  x = tf.keras.layers.Dense(32)(x)
+  x = tf.keras.layers.LeakyReLU(alpha=0.02)(x)
+  x = tf.keras.layers.Dense(16)(x)
+  x = tf.keras.layers.LeakyReLU(alpha=0.02)(x)
   x = tf.keras.layers.Flatten()(x)
-
-  x = tf.keras.layers.Concatenate()([inputs_pos, x])
+  
+  last_candle = tf.keras.layers.Reshape((6))(inputs_1[-1])
+  
+  x = tf.keras.layers.Concatenate()([inputs_pos, x, last_candle])
+  
+  x = tf.keras.layers.Dense(512)(x)
+  x = tf.keras.layers.LeakyReLU(alpha=0.02)(x)
 
   x = tf.keras.layers.Dense(512)(x)
   x = tf.keras.layers.LeakyReLU(alpha=0.02)(x)
@@ -612,7 +545,7 @@ with strategy.scope():
   x = tf.keras.layers.Dense(512)(x)
   x = tf.keras.layers.LeakyReLU(alpha=0.02)(x)
           
-  outputs = tf.keras.layers.Dense(3, activation = "linear", use_bias=False, dtype="float32")(x)
+  outputs = tf.keras.layers.Dense(2, activation = "linear", use_bias=False, dtype="float32")(x)
   model = tf.keras.Model([inputs_1,inputs_pos], outputs)
 model.summary()
 
@@ -626,7 +559,7 @@ with strategy.scope():
 
 agent = DQNAgent(
     model = model, 
-    n_actions = 3, 
+    n_actions = 2, 
     memory_size = memory_size, 
     gamma=gamma,
     optimizer = opt,
