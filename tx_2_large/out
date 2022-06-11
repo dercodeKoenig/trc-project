@@ -136,3 +136,12 @@ ________________________________________________________________________________
 2022-06-11 11:42:04.447398: I tensorflow/core/tpu/kernels/tpu_compile_op_common.cc:193] Compilation of 3699435369752795500 with session name  took 5.483913038s and succeeded
 2022-06-11 11:42:04.465953: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:468] TPU host compilation cache: compilation complete for cache_key(3699435369752795500), session_name(), subgraph_key(std::string(property.function_name) = "cluster_tpu_function_4760207328911789435", property.function_library_fingerprint = 12893515161088349077, property.mlir_module_fingerprint = 0, property.num_replicas = 8, topology.chip_bounds().x = 2, topology.chip_bounds().y = 2, topology.chip_bounds().z = 1, topology.wrap().x = false, topology.wrap().y = false, topology.wrap().z = false, topology.MissingChipCount() = 0, std::string(property.shapes_prefix) = "", property.guaranteed_constants_size = 0, embedding_partitions_fingerprint = "1688352644216761960")
 2022-06-11 11:42:04.466003: I tensorflow/core/tpu/kernels/tpu_compilation_cache_interface.cc:534] After adding entry for key 3699435369752795500 with session_name  cache is 3 entries (32837009 bytes),  marked for eviction 0 entries (0 bytes).
+https://symbolize.stripped_domain/r/?trace=5f0029,7fcb9fa2b08f,909b3f&map= 
+*** SIGTERM received by PID 53931 (TID 53931) on cpu 5 from PID 53726; stack trace: ***
+PC: @           0x5f0029  (unknown)  (unknown)
+    @     0x7fcae6241ed3        992  (unknown)
+    @     0x7fcb9fa2b090  (unknown)  (unknown)
+    @           0x909b40  (unknown)  (unknown)
+https://symbolize.stripped_domain/r/?trace=5f0029,7fcae6241ed2,7fcb9fa2b08f,909b3f&map=8654562a659840069c67d57e08f7541c:7fcad1f3b000-7fcae65b9b10 
+E0611 12:44:44.465797   53931 coredump_hook.cc:320] RAW: Remote crash gathering disabled for SIGTERM.
+E0611 12:44:44.998881   53931 process_state.cc:765] RAW: Raising signal 15 with default behavior
