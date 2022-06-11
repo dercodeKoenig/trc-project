@@ -511,7 +511,8 @@ with strategy.scope():
 
   x2 = tf.keras.layers.Conv1D(128, 5,activation="relu", padding="same")(x)
   x = tf.keras.layers.Concatenate()([x2,x])
-    
+  
+  x = tf.keras.layers.Dense(128,activation = "relu")(x) 
   x2 = tf.keras.layers.Conv1D(128, 5,activation="relu", padding="same")(x)
   x = tf.keras.layers.Add()([x2,x])
   x2 = tf.keras.layers.Conv1D(128, 5,activation="relu", padding="same")(x)
@@ -529,7 +530,7 @@ with strategy.scope():
   x = tf.keras.layers.LeakyReLU(alpha=0.02)(x)
   x = tf.keras.layers.Flatten()(x)
   
-  last_candle = tf.keras.layers.Reshape((6))(inputs_1[-1])
+  last_candle = tf.keras.layers.Reshape((6,))(inputs_1[-1])
   
   x = tf.keras.layers.Concatenate()([inputs_pos, x, last_candle])
   
