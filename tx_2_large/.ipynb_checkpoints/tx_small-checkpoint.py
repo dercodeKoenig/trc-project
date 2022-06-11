@@ -528,9 +528,10 @@ with strategy.scope():
   x = tf.keras.layers.LeakyReLU(alpha=0.02)(x)
   x = tf.keras.layers.Dense(16)(x)
   x = tf.keras.layers.LeakyReLU(alpha=0.02)(x)
+  last_candle = tf.keras.layers.Reshape((6,))(inputs_1[-1])
+    
   x = tf.keras.layers.Flatten()(x)
   
-  last_candle = tf.keras.layers.Reshape((6,))(inputs_1[-1])
   
   x = tf.keras.layers.Concatenate()([inputs_pos, x, last_candle])
   
