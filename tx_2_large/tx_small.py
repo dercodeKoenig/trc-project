@@ -31,8 +31,8 @@ seq_len = 550
 soft_reward_inc = 1.05
 comission = 10/100000
 
-resume = True
-#resume = False
+#resume = True
+resume = False
 
 def sample_to_x(sample):
         
@@ -503,15 +503,19 @@ with strategy.scope():
 
   x = tf.keras.layers.Dense(32)(x)
   x = tf.keras.layers.LeakyReLU()(x)
+  x = tf.keras.layers.LayerNormalization()(x)
 
   x2 = tf.keras.layers.Conv1D(128, 5,activation="relu", padding="same")(x)
   x = tf.keras.layers.Concatenate()([x2,x])
 
-  x = tf.keras.layers.Dense(64,activation = "relu")(x)
+  x = tf.keras.layers.Dense(64)(x)
+  x = tf.keras.layers.LeakyReLU()(x)
+  x = tf.keras.layers.LayerNormalization()(x)
 
   x2 = tf.keras.layers.Conv1D(128, 5,activation="relu", padding="same")(x)
   x = tf.keras.layers.Concatenate()([x2,x])
-  
+  x = tf.keras.layers.LayerNormalization()(x)
+    
   x = tf.keras.layers.Dense(128,activation = "relu")(x) 
   x2 = tf.keras.layers.Conv1D(128, 5,activation="relu", padding="same")(x)
   x = tf.keras.layers.Add()([x2,x])
@@ -528,8 +532,8 @@ with strategy.scope():
   x = tf.keras.layers.LeakyReLU(alpha=0.02)(x)
   x = tf.keras.layers.Dense(16)(x)
   x = tf.keras.layers.LeakyReLU(alpha=0.02)(x)
-  last_candle = tf.keras.layers.Reshape((6,))(inputs_1[:, -1])
-    
+  last_candle = tf.keras.layers.Reshape((6,))(inputs_1[:,-1])
+
   x = tf.keras.layers.Flatten()(x)
   
   
@@ -549,6 +553,7 @@ with strategy.scope():
           
   outputs = tf.keras.layers.Dense(2, activation = "linear", use_bias=False, dtype="float32")(x)
   model = tf.keras.Model([inputs_1,inputs_pos], outputs)
+    
 model.summary()
 
 
