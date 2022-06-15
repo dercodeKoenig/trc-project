@@ -418,9 +418,9 @@ class DQNAgent:
                 states_2 = np.array([x[1] for x in states])
                 actions = self.select_actions(states_1, states_2)
                 for action in actions:
-                    if action == 1:
+                    if action == 0:
                         self.shorts+=1
-                    elif action == 2:
+                    elif action == 1:
                         self.longs+=1
 
                 sasrt_pairs = []
