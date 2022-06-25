@@ -1,1 +1,0 @@
-gcloud alpha compute tpus tpu-vm ssh tpu-node-2 --zone us-central1-f
