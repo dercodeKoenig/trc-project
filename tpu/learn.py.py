@@ -14,7 +14,7 @@ import time
 log_type = 0
 
 name = "dqn_trading"
-log_folder = "logs/"
+log_folder = "./"
 candles_dir = "../candles/"
 
 training_parallel = 16
